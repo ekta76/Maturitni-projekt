@@ -96,7 +96,6 @@ GameObject:
   - component: {fileID: 6963621635692318740}
   - component: {fileID: 6963621635692318743}
   - component: {fileID: 6963621635692318746}
-  - component: {fileID: 6963621635692318741}
   - component: {fileID: 6963621635692318744}
   - component: {fileID: 6963621635692318747}
   m_Layer: 0
@@ -174,22 +173,6 @@ MonoBehaviour:
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089","$version":"A"},"$version":"A"},{"name":"targetGridPos","value":{"x":0.0,"y":0.0,"z":0.0,"$type":"UnityEngine.Vector3"},"typeHandle":{"Identification":"UnityEngine.Vector3,
       UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","$version":"A"},"$version":"A"}],"$version":"A"},"$version":"A"}}'
     _objectReferences: []
---- !u!114 &6963621635692318741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6963621635692318739}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2fe5546f775c47d2820aa5e8a715f53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _data:
-    _json: '{"nest":{"source":"Macro","macro":0,"embed":null}}'
-    _objectReferences:
-    - {fileID: 11400000, guid: 241dda3cd77c53348ba8a54a49ef1199, type: 2}
 --- !u!54 &6963621635692318744
 Rigidbody:
   m_ObjectHideFlags: 0
