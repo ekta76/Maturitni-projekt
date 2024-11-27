@@ -1,59 +1,70 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SlimeRotation : MonoBehaviour
 {
     private Animator animator;
+    private Camera mainCamera;
 
     void Start()
     {
-        // Get the Animator component attached to this GameObject
+        // Cache the Animator and Main Camera
         animator = GetComponent<Animator>();
+        mainCamera = Camera.main;
     }
 
     void Update()
     {
-        // Rotate the object to face the camera (billboarding)
-        transform.rotation = Quaternion.Euler(0f, Camera.main.transform.rotation.eulerAngles.y, 0f);
+        UpdateAnimationParameters();
+        HandleBillboard();
+    }
 
-        // Get the camera's forward direction relative to the grid
-        Vector3 cameraForward = Camera.main.transform.forward;
-        cameraForward.y = 0; // Ignore vertical component
-        cameraForward.Normalize();
+    // Ensures the enemy always faces the camera
+    private void HandleBillboard()
+    {
+        if (mainCamera == null) return;
 
-        // Calculate the relative direction between the object and the camera
-        Vector3 objectToCamera = Camera.main.transform.position - transform.position;
-        objectToCamera.y = 0; // Ignore vertical component
+        // Adjust the rotation to face the camera, ignoring vertical component
+        Vector3 lookAtPosition = mainCamera.transform.position;
+        lookAtPosition.y = transform.position.y;
+        transform.LookAt(lookAtPosition);
+    }
+
+    // Updates the animator parameters based on the camera's relative position
+    private void UpdateAnimationParameters()
+    {
+        if (mainCamera == null || animator == null) return;
+
+        // Get the relative direction from the enemy to the camera
+        Vector3 objectToCamera = mainCamera.transform.position - transform.position;
+        objectToCamera.y = 0f; // Ignore vertical component
         objectToCamera.Normalize();
 
-        // Determine which direction the camera is relative to the object
-        float moveX = 0f;
-        float moveY = 0f;
+        // Get the enemy's original forward direction (ignoring LookAt billboard effect)
+        Vector3 enemyForward = transform.parent != null ? transform.parent.forward : Vector3.forward;
+        enemyForward.y = 0f;
+        enemyForward.Normalize();
 
-        if (Vector3.Dot(objectToCamera, Vector3.forward) > 0.7f) // Camera is in front of the object
-        {
-            moveX = 0f;
-            moveY = -1f;
-        }
-        else if (Vector3.Dot(objectToCamera, Vector3.back) > 0.7f) // Camera is behind the object
-        {
-            moveX = 0f;
-            moveY = 1f;
-        }
-        else if (Vector3.Dot(objectToCamera, Vector3.right) > 0.7f) // Camera is to the right of the object
-        {
-            moveX = -1f;
-            moveY = 0f;
-        }
-        else if (Vector3.Dot(objectToCamera, Vector3.left) > 0.7f) // Camera is to the left of the object
-        {
-            moveX = 1f;
-            moveY = 0f;
-        }
+        // Calculate the signed angle to determine relative direction
+        float angle = Vector3.SignedAngle(enemyForward, objectToCamera, Vector3.up);
+
+        // Determine which animation to play based on the angle
+        Vector2 move = DetermineMoveDirection(angle);
 
         // Pass the values to the Animator
-        animator.SetFloat("moveX", moveX);
-        animator.SetFloat("moveY", moveY);
+        animator.SetFloat("moveX", move.x);
+        animator.SetFloat("moveY", move.y);
+    }
+
+    // Determines the move direction for the animator based on the angle
+    private Vector2 DetermineMoveDirection(float angle)
+    {
+        if (angle > -45f && angle <= 45f) // Front
+            return new Vector2(0f, -1f);
+        else if (angle > 45f && angle <= 135f) // Right
+            return new Vector2(1f, 0f);
+        else if (angle > -135f && angle <= -45f) // Left
+            return new Vector2(-1f, 0f);
+        else // Back
+            return new Vector2(0f, 1f);
     }
 }

@@ -42,8 +42,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8791760859639355246}
   - component: {fileID: 8791760859639355243}
-  - component: {fileID: 8791760859639355244}
-  - component: {fileID: 8791760859639355245}
+  - component: {fileID: 9214234439885186936}
+  - component: {fileID: 3993914032311299980}
   m_Layer: 0
   m_Name: GFX
   m_TagString: Untagged
@@ -118,7 +118,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &8791760859639355244
+--- !u!95 &9214234439885186936
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -139,7 +139,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8791760859639355245
+--- !u!114 &3993914032311299980
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
