@@ -157,6 +157,10 @@ public class Movement : MonoBehaviour
             {
                 return false; // Can't move in this direction
             }
+            if (hit.collider.CompareTag("Enemy"))
+            {
+                return false; // Can't move in this direction
+            }
         }
         return true; // Can move
     }
