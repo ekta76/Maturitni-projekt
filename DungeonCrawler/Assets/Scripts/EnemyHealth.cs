@@ -5,19 +5,19 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] private int health = 50;
-    
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
-    public void Damage(int amount)
+    public void TakeDamage(int amount)
     {
-        if (amount < 0)
+        // Decrease health by the damage amount
+        health -= amount;
+
+        // Check if health is less than or equal to 0, then destroy the enemy
+        if (health <= 0)
         {
-            GameObject.Destroy(gameObject);
+            Destroy(gameObject);  // Destroy the enemy game object
         }
-        this.health = amount;
+
+        // You could also add a debug log here to see how much damage was taken
+        Debug.Log($"{gameObject.name} took {amount} damage, remaining health: {health}");
     }
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8796139813394773879}
   - component: {fileID: 8796139813394773878}
   - component: {fileID: 8796139813394773873}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CubeWallBlue
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5e5d18f8fcaf0a04cb22bbaaafca16ea, type: 2}
+  - {fileID: 2100000, guid: 392be068bed38f4408be0282a013e86e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

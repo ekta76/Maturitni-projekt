@@ -6,16 +6,19 @@ TagManager:
   tags:
   - Wall
   - Enemy
+  - FrontChain
+  - BackChain
+  - Button
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - IronGateChain
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Player
+  - Wall
+  - WallAndPlayer
   - 
   - 
   - 
