@@ -2644,7 +2644,7 @@ GameObject:
   - component: {fileID: 791209391628937590}
   - component: {fileID: 4186485864327086930}
   - component: {fileID: 7340347838569288299}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: IronGateChain
   m_TagString: Wall
   m_Icon: {fileID: 0}

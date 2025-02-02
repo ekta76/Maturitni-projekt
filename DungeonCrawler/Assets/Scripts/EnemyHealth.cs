@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private int health = 50;
+    public GameObject sprite;
+    public int health = 100;
 
     public void TakeDamage(int amount)
     {
@@ -15,6 +16,7 @@ public class Health : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);  // Destroy the enemy game object
+            Destroy(sprite);
         }
 
         // You could also add a debug log here to see how much damage was taken

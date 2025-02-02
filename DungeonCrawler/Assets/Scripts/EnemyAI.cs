@@ -1,47 +1,74 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Pathfinding))]
 public class EnemyAI : MonoBehaviour
 {
-    public Transform player; // The target (player)
-    public float pathRefind = 0.05f; // Time between path recalculations
-    public float moveInterval = 2f; // Cooldown before taking the next step
-    public float checkDistance = 1.1f; // Slightly more than 1 to detect obstacles
-    public LayerMask unwalkableMasks; // Add unwalkable layers/masks (player, walls, etc.)
+    public Transform player;
+    public float pathRefind = 0.05f;
+    public float moveInterval = 1f;
+    public float checkDistance = 1f;
+    public LayerMask unwalkableMasks;
+    public GameObject enemySprite;
+    public Transform hitbox;
+    public float enemyFollowSpeed = 4f;
+    private Vector3 enemySpritePosition = new Vector3(0f, 0f, 0f);
+    private float currentCooldown = 0f;
 
-    private Pathfinding pathfinding; // Reference to Pathfinding script
-    private Vector3[] currentPath; // The calculated path
-    private int targetIndex; // Current position in the path
-    private bool isMoving = false; // Is the enemy currently moving
+    private Pathfinding pathfinding;
+    private Vector3[] currentPath;
+    private int targetIndex;
+    private bool isMoving = false;
+
+    private Animator animator;
+    private Camera mainCamera;
 
     private void Start()
     {
         pathfinding = GetComponent<Pathfinding>();
+        mainCamera = Camera.main;
+
+        if (enemySprite != null)
+        {
+            animator = enemySprite.GetComponent<Animator>();
+        }
+
         StartCoroutine(UpdatePathRoutine());
     }
 
     private void Update()
     {
-        // Enemy only moves if not already moving
-        if (!isMoving && currentPath != null && targetIndex < currentPath.Length)
+
+
+        // Update cooldown timer
+        if (currentCooldown > 0)
+        {
+            currentCooldown -= Time.deltaTime; // Decrease the cooldown over time
+        }
+
+        // If the cooldown is finished and not currently moving, start pathfinding or movement
+        if (currentCooldown <= 0 && !isMoving && currentPath != null && targetIndex < currentPath.Length)
         {
             StartCoroutine(MoveToNextNode());
         }
+
+        UpdateSpritePosition();
+        UpdateSpriteRotation();
+
+        // Rotate towards player if within checkDistance
+        RotateTowardsPlayerIfClose();
     }
+
 
     private IEnumerator UpdatePathRoutine()
     {
         while (true)
         {
-            // Calculate the position directly in front of the player
-            Vector3 targetPosition = GetAdjustedPositionInFrontOfPlayer();
-
-            // Find the path to the target considering the unwalkable layers
+            Vector3 targetPosition = GetAdjustedPositionNextToPlayer();
             currentPath = pathfinding.FindPath(transform.position, targetPosition, unwalkableMasks);
-
-            targetIndex = 0; // Reset path index
-            yield return new WaitForSeconds(pathRefind); // Wait before recalculating the path
+            targetIndex = 0;
+            yield return new WaitForSeconds(pathRefind);
         }
     }
 
@@ -49,54 +76,173 @@ public class EnemyAI : MonoBehaviour
     {
         isMoving = true;
 
-        // Get the next target position on the path
         Vector3 targetPosition = currentPath[targetIndex];
-        targetPosition.y = 0; // Ensure the enemy stays at height 1
+        targetPosition.y = 0;
 
-        // Move instantly to the target position
+        Vector3 moveDirection = (targetPosition - transform.position).normalized;
+        if (moveDirection != Vector3.zero)
+        {
+            // Instant rotation of the enemy (only affects collider)
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            yield return StartCoroutine(UpdateRotation(targetRotation, 0.5f));
+
+            // After rotation, we wait for the cooldown before moving
+            currentCooldown = moveInterval;  // Set cooldown for after rotation
+            yield return new WaitForSeconds(currentCooldown);  // Wait before moving
+        }
+
+        // Move to the next position after the wait
         transform.position = targetPosition;
-
-        // Snap position to grid for accuracy
         RoundPosition();
-
-        // Move to the next node in the path
         targetIndex++;
 
-        // Wait for the cooldown before moving to the next node
-        yield return new WaitForSeconds(moveInterval);
+        // Set cooldown for the next movement after the move
+        currentCooldown = moveInterval;
+        yield return new WaitForSeconds(currentCooldown);
 
         isMoving = false;
     }
 
-    private Vector3 GetAdjustedPositionInFrontOfPlayer()
+    private Vector3 GetAdjustedPositionNextToPlayer()
     {
-        // Get the player's facing direction
-        Vector3 forward = player.forward;
+        Vector3 playerPos = player.position;
+        List<Vector3> possiblePositions = new List<Vector3>
+        {
+            new Vector3(playerPos.x + 1, 0, playerPos.z),
+            new Vector3(playerPos.x - 1, 0, playerPos.z),
+            new Vector3(playerPos.x, 0, playerPos.z + 1),
+            new Vector3(playerPos.x, 0, playerPos.z - 1)
+        };
 
-        // Snap the direction to the nearest axis (no diagonal movement)
-        forward = new Vector3(
-            Mathf.Round(forward.x),
-            0, // Ensure no Y-axis movement
-            Mathf.Round(forward.z)
-        );
+        List<Vector3> validPositions = new List<Vector3>();
+        foreach (Vector3 pos in possiblePositions)
+        {
+            if (!Physics.CheckSphere(pos, 0.1f, unwalkableMasks))
+            {
+                validPositions.Add(pos);
+            }
+        }
 
-        // Adjust to stand one block closer in front of the player
-        Vector3 targetPosition = player.position + forward;
+        if (validPositions.Count == 0)
+        {
+            return playerPos; // Fallback if no valid positions
+        }
 
-        // Round X and Z to the nearest 1, and ensure Y is at height 1
-        return new Vector3(
-            Mathf.Round(targetPosition.x),
-            0, // Set height explicitly
-            Mathf.Round(targetPosition.z)
-        );
+        // Find closest valid position to enemy
+        Vector3 closestPosition = validPositions[0];
+        float minDistance = Vector3.Distance(transform.position, closestPosition);
+        foreach (Vector3 pos in validPositions)
+        {
+            float currentDistance = Vector3.Distance(transform.position, pos);
+            if (currentDistance < minDistance)
+            {
+                closestPosition = pos;
+                minDistance = currentDistance;
+            }
+        }
+
+        return closestPosition;
+    }
+
+    private IEnumerator UpdateRotation(Quaternion targetRotation, float duration)
+    {
+        Quaternion startRotation = transform.rotation;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            transform.rotation = Quaternion.Slerp(startRotation, targetRotation, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        transform.rotation = targetRotation;
+    }
+
+
+    private void UpdateSpritePosition()
+    {
+        if (enemySprite != null)
+        {
+            Vector3 desiredPosition = transform.position + transform.rotation * enemySpritePosition;
+            enemySprite.transform.position = Vector3.MoveTowards(enemySprite.transform.position, desiredPosition, Time.deltaTime * enemyFollowSpeed);
+        }
+    }
+
+    private void UpdateSpriteRotation()
+    {
+        if (mainCamera == null || enemySprite == null) return;
+
+        // Make the sprite face the camera (billboarding effect)
+        Vector3 lookAtPosition = mainCamera.transform.position;
+        lookAtPosition.y = enemySprite.transform.position.y;
+        enemySprite.transform.LookAt(lookAtPosition);
+
+        // Smoothly rotate the sprite towards the target (collider's facing direction)
+        Vector3 directionToPlayer = transform.forward; // The enemy's rotation direction
+        Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+        enemySprite.transform.rotation = Quaternion.Slerp(enemySprite.transform.rotation, targetRotation, Time.deltaTime * 5f); // Adjust speed as needed
+
+        // Update animation parameters
+        if (animator != null)
+        {
+            Vector3 objectToCamera = mainCamera.transform.position - enemySprite.transform.position;
+            objectToCamera.y = 0f; // Ignore vertical component
+            objectToCamera.Normalize();
+
+            Vector3 enemyForward = transform.forward;
+            enemyForward.y = 0f;
+            enemyForward.Normalize();
+
+            float angle = Vector3.SignedAngle(enemyForward, objectToCamera, Vector3.up);
+            Vector2 move = DetermineMoveDirection(angle);
+
+            animator.SetFloat("moveX", move.x);
+            animator.SetFloat("moveY", move.y);
+        }
+    }
+
+    private Vector2 DetermineMoveDirection(float angle)
+    {
+        if (angle > -45f && angle <= 45f)
+            return new Vector2(0f, 1f); // Back
+        else if (angle > 45f && angle <= 135f)
+            return new Vector2(-1f, 0f); // Left
+        else if (angle > -135f && angle <= -45f)
+            return new Vector2(1f, 0f); // Right
+        else
+            return new Vector2(0f, -1f); // Front
+    }
+
+    private IEnumerator RotateAndWaitBeforeMoving()
+    {
+        // Instant rotation of the enemy (only affects collider)
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        transform.rotation = Quaternion.LookRotation(directionToPlayer);
+
+        // Wait for the same duration as the move interval before continuing
+        yield return new WaitForSeconds(1f);
+
+        // After rotation and waiting, resume movement or pathfinding
+        isMoving = false;  // Mark as ready to move again
+    }
+
+    private void RotateTowardsPlayerIfClose()
+    {
+        // Check if enemy is within the defined distance from the player
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        if (distanceToPlayer <= checkDistance && !isMoving)
+        {
+            // Start the coroutine for rotating and waiting
+            StartCoroutine(RotateAndWaitBeforeMoving());
+            isMoving = true;  // Mark as rotating (not moving along path)
+        }
     }
 
     private void RoundPosition()
     {
-        // Round the enemy's position to ensure alignment with the grid
         transform.position = new Vector3(
             Mathf.Round(transform.position.x),
-            0, // Keep the enemy at height 1
+            0,
             Mathf.Round(transform.position.z)
         );
     }
