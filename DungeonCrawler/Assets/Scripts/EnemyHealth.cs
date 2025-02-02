@@ -2,24 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class EnemyHealth : MonoBehaviour
 {
-    public GameObject sprite;
-    public int health = 100;
+    public GameObject enemyObject;
+    public int maxHealth = 100;
+    private int currentHealth;
+
+    void Start()
+    {
+        currentHealth = maxHealth; // Initialize health
+    }
 
     public void TakeDamage(int amount)
     {
         // Decrease health by the damage amount
-        health -= amount;
+        currentHealth -= amount;
 
         // Check if health is less than or equal to 0, then destroy the enemy
-        if (health <= 0)
+        if (currentHealth <= 0)
         {
-            Destroy(gameObject);  // Destroy the enemy game object
-            Destroy(sprite);
+            Debug.Log($"Enemy {gameObject.name} has died!");
+            Destroy(enemyObject);  // Destroy the enemy game object
         }
 
         // You could also add a debug log here to see how much damage was taken
-        Debug.Log($"{gameObject.name} took {amount} damage, remaining health: {health}");
+        Debug.Log($"{gameObject.name} took {amount} damage, remaining health: {currentHealth}");
     }
 }

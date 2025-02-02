@@ -60,7 +60,6 @@ public class EnemyAI : MonoBehaviour
         RotateTowardsPlayerIfClose();
     }
 
-
     private IEnumerator UpdatePathRoutine()
     {
         while (true)

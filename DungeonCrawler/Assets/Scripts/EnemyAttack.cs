@@ -42,6 +42,7 @@ public class EnemyAttack : MonoBehaviour
     {
         while (isPlayerInRange)
         {
+
             // Wait for the attack delay
             yield return new WaitForSeconds(attackDelay);
 

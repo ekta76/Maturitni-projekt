@@ -17,6 +17,7 @@ public class PlayerAttack : MonoBehaviour
     public Hand[] hands; // Array of hands for the character
     private bool[] handPairCooldowns; // Cooldown state for each pair of hands
     public Collider attackRangeCollider; // Single collider for attack range detection
+    public Animator attackAnimation;
 
     private Color defaultButtonColor; // Store the default button color
 
@@ -97,6 +98,16 @@ public class PlayerAttack : MonoBehaviour
 
         Hand hand = hands[handIndex];
         int pairIndex = handIndex / 2; // Determine the pair index (0 for hand 0-1, 1 for hand 2-3, etc.)
+
+        // Play attack animation if Animator is assigned
+        if (attackAnimation != null)
+        {
+            attackAnimation.SetTrigger("Attack");
+        }
+        else
+        {
+            Debug.LogError("Attack animation is not assigned in the inspector.");
+        }
 
         // Check if any enemies are in range
         Collider[] hitColliders = Physics.OverlapBox(
