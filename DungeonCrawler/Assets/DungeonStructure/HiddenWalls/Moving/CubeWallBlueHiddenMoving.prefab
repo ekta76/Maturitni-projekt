@@ -95,8 +95,8 @@ GameObject:
   - component: {fileID: 4345156199137702296}
   - component: {fileID: 7519593570717230813}
   - component: {fileID: 3573560807671393517}
-  m_Layer: 0
-  m_Name: CubeWallBlueHiddenMoving1
+  m_Layer: 8
+  m_Name: CubeWallBlueHiddenMoving
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

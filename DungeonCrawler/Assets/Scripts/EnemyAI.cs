@@ -8,11 +8,12 @@ public class EnemyAI : MonoBehaviour
     public Transform player;
     public float pathRefind = 0.05f;
     public float moveInterval = 1f;
+    public float rotateToPlayerWhenClose = 1f;
     public float checkDistance = 1f;
     public LayerMask unwalkableMasks;
     public GameObject enemySprite;
     public Transform hitbox;
-    public float enemyFollowSpeed = 4f;
+    public float enemyFollowSpeed = 2f;
     private Vector3 enemySpritePosition = new Vector3(0f, 0f, 0f);
     private float currentCooldown = 0f;
 
@@ -78,29 +79,47 @@ public class EnemyAI : MonoBehaviour
         Vector3 targetPosition = currentPath[targetIndex];
         targetPosition.y = 0;
 
+        // Rotate towards the next target position
         Vector3 moveDirection = (targetPosition - transform.position).normalized;
         if (moveDirection != Vector3.zero)
         {
-            // Instant rotation of the enemy (only affects collider)
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            yield return StartCoroutine(UpdateRotation(targetRotation, 0.5f));
+            yield return StartCoroutine(UpdateRotation(targetRotation, 0.25f));
 
             // After rotation, we wait for the cooldown before moving
             currentCooldown = moveInterval;  // Set cooldown for after rotation
             yield return new WaitForSeconds(currentCooldown);  // Wait before moving
         }
 
-        // Move to the next position after the wait
+        // Check if the player is now closer than the intended movement position
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
+
+        if (distanceToPlayer <= checkDistance) // If player is within "alert" range
+        {
+            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+            Quaternion lookAtPlayer = Quaternion.LookRotation(directionToPlayer);
+            yield return StartCoroutine(UpdateRotation(lookAtPlayer, 0.25f));
+
+            // Reset cooldown and stop movement
+            currentCooldown = moveInterval;
+            isMoving = false;
+            yield break; // Do not proceed to move
+        }
+
+        // If the player is not closer, proceed with movement
         transform.position = targetPosition;
         RoundPosition();
         targetIndex++;
 
-        // Set cooldown for the next movement after the move
+        // Set cooldown for the next movement
         currentCooldown = moveInterval;
         yield return new WaitForSeconds(currentCooldown);
 
         isMoving = false;
     }
+
+
 
     private Vector3 GetAdjustedPositionNextToPlayer()
     {
@@ -219,7 +238,7 @@ public class EnemyAI : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(directionToPlayer);
 
         // Wait for the same duration as the move interval before continuing
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(rotateToPlayerWhenClose);
 
         // After rotation and waiting, resume movement or pathfinding
         isMoving = false;  // Mark as ready to move again

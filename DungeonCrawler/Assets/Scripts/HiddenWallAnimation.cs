@@ -8,11 +8,17 @@ public class HiddenWallAnimation : MonoBehaviour
     public Movement playerMovement; // Reference to the Player's Movement script
     public BoxCollider wallCollider; // Reference to the Wall's BoxCollider
     public LayerMask chainLayer; // Layer mask for button detection
+    private Grid gridManager;
 
     private float progress = 0f; // Tracks animation progress (0-1)
     private float currentWallSpeed = 0f; // Current animation speed (0, 1, or -1)
     private float lastWallSpeed = 1f; // Tracks last movement direction
     private bool isFirstClick = true;
+
+    private void Start()
+    {
+        gridManager = FindObjectOfType<Grid>();
+    }
 
     private void Update()
     {
@@ -111,6 +117,14 @@ public class HiddenWallAnimation : MonoBehaviour
         if (playerMovement != null)
         {
             playerMovement.enabled = true;
+        }
+    }
+
+    public void AnimationUpdateGrid() // Called via animation event
+    {
+        if (gridManager != null)
+        {
+            gridManager.UpdateGridFromAnimation();
         }
     }
 }

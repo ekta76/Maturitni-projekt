@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GateAnimation : MonoBehaviour
 {
@@ -9,11 +10,17 @@ public class GateAnimation : MonoBehaviour
     public Movement playerMovement; // Reference to the Player's Movement script
     public BoxCollider gateCollider; // Reference to the Gate's BoxCollider
     public LayerMask chainLayer; // Layer mask for chain detection
+    private Grid gridManager;
 
     private float progress = 0f; // Tracks animation progress (0-1)
     private float currentGateSpeed = 0f; // Current animation speed (0, 1, or -1)
     private float lastGateSpeed = 1f; // Tracks last movement direction
     private bool isFirstClick = true;
+
+    private void Start()
+    {
+        gridManager = FindObjectOfType<Grid>();
+    }
 
     private void Update()
     {
@@ -129,6 +136,14 @@ public class GateAnimation : MonoBehaviour
         if (playerMovement != null)
         {
             playerMovement.enabled = true;
+        }
+    }
+
+    public void AnimationUpdateGrid() // Called via animation event
+    {
+        if (gridManager != null)
+        {
+            gridManager.UpdateGridFromAnimation();
         }
     }
 }

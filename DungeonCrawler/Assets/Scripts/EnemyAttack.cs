@@ -8,6 +8,8 @@ public class EnemyAttack : MonoBehaviour
     private bool isPlayerInRange = false; // Tracks if the player is in the attack zone
     private Coroutine attackCoroutine; // Tracks the current attack coroutine
     public Collider triggerCollider; // The collider used to detect the player
+    public Animator enemyAnimator;
+    public GameObject enemySprite;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -52,6 +54,10 @@ public class EnemyAttack : MonoBehaviour
                 PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
                 if (playerHealth != null)
                 {
+                    enemyAnimator.SetTrigger("Attack");
+                    yield return new WaitForSeconds(0.8f);
+                    StartCoroutine(AttackEffect(0.2f, 0.5f)); // Moves 0.5 units forward in 0.2 sec
+                    yield return new WaitForSeconds(0.2f);
                     playerHealth.TryToTakeDamage(damageAmount); // Call the method to apply damage
                     Debug.Log($"AI attacked player {player.name}, dealing {damageAmount} damage!");
                 }
@@ -60,6 +66,32 @@ public class EnemyAttack : MonoBehaviour
 
         attackCoroutine = null; // Clear the coroutine reference when done
     }
+
+    private IEnumerator AttackEffect(float duration, float moveDistance)
+    {
+        Vector3 startPosition = enemySprite.transform.position;
+        Vector3 attackPosition = startPosition + transform.forward * moveDistance; // Move forward
+
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            enemySprite.transform.position = Vector3.Lerp(startPosition, attackPosition, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Reset back
+        elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            enemySprite.transform.position = Vector3.Lerp(attackPosition, startPosition, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        enemySprite.transform.position = startPosition; // Ensure it resets correctly
+    }
+
 
     private void OnDrawGizmos()
     {

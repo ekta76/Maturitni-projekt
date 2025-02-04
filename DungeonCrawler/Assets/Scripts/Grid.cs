@@ -9,6 +9,7 @@ public class Grid : MonoBehaviour
     public float nodeRadius; // Radius of each node
     public Transform player; // Reference to the player
     public float updateInterval = 0.05f; // Time interval for grid updates
+    private Vector3 lastPlayerPosition;
 
     Node[,] grid;
     float nodeDiameter;
@@ -27,7 +28,12 @@ public class Grid : MonoBehaviour
 
     private void Update()
     {
-        CreateGrid();
+            // Check if player moved since last frame
+            if (Vector3.Distance(player.position, lastPlayerPosition) > 0.01f)
+            {
+                CreateGrid(); // Update grid only when player moves
+                lastPlayerPosition = player.position; // Save new position
+            }
     }
 
     void CreateGrid()
@@ -44,6 +50,11 @@ public class Grid : MonoBehaviour
                 grid[x, y] = new Node(walkable, worldPoint, x, y);
             }
         }
+    }
+
+    public void UpdateGridFromAnimation()
+    {
+        CreateGrid();
     }
 
     public Node NodeFromWorldPoint(Vector3 worldPosition)

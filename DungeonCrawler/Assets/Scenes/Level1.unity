@@ -1738,7 +1738,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-5478
+  m_Name: pb_Mesh-5462
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2285,7 +2285,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2760501190642056049, guid: 61dd0a23408fc9b448ec5af52f390176, type: 3}
       propertyPath: m_Name
-      value: CubeWallBlueHiddenMoving1
+      value: CubeWallBlueHiddenMoving
       objectReference: {fileID: 0}
     - target: {fileID: 3573560807671393517, guid: 61dd0a23408fc9b448ec5af52f390176, type: 3}
       propertyPath: buttonAnimator
@@ -5801,7 +5801,7 @@ GameObject:
   - component: {fileID: 360614670}
   - component: {fileID: 360614671}
   m_Layer: 0
-  m_Name: GridSystem
+  m_Name: GridManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8710,7 +8710,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-5464
+  m_Name: pb_Mesh-5448
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -18095,7 +18095,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1221128978
 Transform:
   m_ObjectHideFlags: 0
@@ -21905,7 +21905,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2760501190642056049, guid: 61dd0a23408fc9b448ec5af52f390176, type: 3}
       propertyPath: m_Name
-      value: CubeWallBlueHiddenMoving1
+      value: CubeWallBlueHiddenMoving
       objectReference: {fileID: 0}
     - target: {fileID: 3573560807671393517, guid: 61dd0a23408fc9b448ec5af52f390176, type: 3}
       propertyPath: buttonAnimator
@@ -23317,7 +23317,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-5422
+  m_Name: pb_Mesh-5406
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -23930,7 +23930,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2760501190642056049, guid: 61dd0a23408fc9b448ec5af52f390176, type: 3}
       propertyPath: m_Name
-      value: CubeWallBlueHiddenMoving1
+      value: CubeWallBlueHiddenMoving
       objectReference: {fileID: 0}
     - target: {fileID: 3573560807671393517, guid: 61dd0a23408fc9b448ec5af52f390176, type: 3}
       propertyPath: buttonAnimator
@@ -24253,7 +24253,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-5436
+  m_Name: pb_Mesh-5420
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -25573,7 +25573,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-5450
+  m_Name: pb_Mesh-5434
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -29755,7 +29755,7 @@ PrefabInstance:
       objectReference: {fileID: 105660513}
     - target: {fileID: 1331569492350741686, guid: 55327565f8c35ef4885c4b6e472ddc13, type: 3}
       propertyPath: m_VersionIndex
-      value: 6589
+      value: 6595
       objectReference: {fileID: 0}
     - target: {fileID: 2174489229638454450, guid: 55327565f8c35ef4885c4b6e472ddc13, type: 3}
       propertyPath: m_Mesh
@@ -29779,7 +29779,7 @@ PrefabInstance:
       objectReference: {fileID: 1736008609}
     - target: {fileID: 3326679513210652136, guid: 55327565f8c35ef4885c4b6e472ddc13, type: 3}
       propertyPath: m_VersionIndex
-      value: 2791
+      value: 2797
       objectReference: {fileID: 0}
     - target: {fileID: 4070826209196621050, guid: 55327565f8c35ef4885c4b6e472ddc13, type: 3}
       propertyPath: m_Name
@@ -29845,13 +29845,41 @@ PrefabInstance:
       propertyPath: playerMovement
       value: 
       objectReference: {fileID: 1767681277}
+    - target: {fileID: 7340347838569288299, guid: 55327565f8c35ef4885c4b6e472ddc13, type: 3}
+      propertyPath: onGateStateChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7340347838569288299, guid: 55327565f8c35ef4885c4b6e472ddc13, type: 3}
+      propertyPath: onGateStateChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7340347838569288299, guid: 55327565f8c35ef4885c4b6e472ddc13, type: 3}
+      propertyPath: onGateStateChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 360614671}
+    - target: {fileID: 7340347838569288299, guid: 55327565f8c35ef4885c4b6e472ddc13, type: 3}
+      propertyPath: onGateStateChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7340347838569288299, guid: 55327565f8c35ef4885c4b6e472ddc13, type: 3}
+      propertyPath: onGateStateChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateGridFromAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 7340347838569288299, guid: 55327565f8c35ef4885c4b6e472ddc13, type: 3}
+      propertyPath: onGateStateChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Grid, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7340347838569288299, guid: 55327565f8c35ef4885c4b6e472ddc13, type: 3}
+      propertyPath: onGateStateChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7440453274278770374, guid: 55327565f8c35ef4885c4b6e472ddc13, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 593511324}
     - target: {fileID: 7440453274278770374, guid: 55327565f8c35ef4885c4b6e472ddc13, type: 3}
       propertyPath: m_VersionIndex
-      value: 5722
+      value: 5728
       objectReference: {fileID: 0}
     - target: {fileID: 7583936997920820238, guid: 55327565f8c35ef4885c4b6e472ddc13, type: 3}
       propertyPath: m_Mesh
@@ -29863,7 +29891,7 @@ PrefabInstance:
       objectReference: {fileID: 1588801204}
     - target: {fileID: 7899443150580757386, guid: 55327565f8c35ef4885c4b6e472ddc13, type: 3}
       propertyPath: m_VersionIndex
-      value: 2249
+      value: 2255
       objectReference: {fileID: 0}
     - target: {fileID: 8120785332090637287, guid: 55327565f8c35ef4885c4b6e472ddc13, type: 3}
       propertyPath: m_Mesh
@@ -29875,7 +29903,7 @@ PrefabInstance:
       objectReference: {fileID: 1654534772}
     - target: {fileID: 8576009692296790340, guid: 55327565f8c35ef4885c4b6e472ddc13, type: 3}
       propertyPath: m_VersionIndex
-      value: 2021
+      value: 2027
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55327565f8c35ef4885c4b6e472ddc13, type: 3}
@@ -30861,6 +30889,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 965891318}
     m_Modifications:
+    - target: {fileID: 1366400400451558605, guid: 539789dc0539ca743a8e06061549cf61, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1366400401573626698, guid: 539789dc0539ca743a8e06061549cf61, type: 3}
       propertyPath: attackAnimation
       value: 
@@ -31045,6 +31077,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 84555908}
     m_Modifications:
+    - target: {fileID: 679412765697954130, guid: 1a4de5e38d985c14780c5702138c5636, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 914460261051572545, guid: 1a4de5e38d985c14780c5702138c5636, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -31052,6 +31088,10 @@ PrefabInstance:
     - target: {fileID: 914460261051572548, guid: 1a4de5e38d985c14780c5702138c5636, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 914460261051572548, guid: 1a4de5e38d985c14780c5702138c5636, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 914460262411824212, guid: 1a4de5e38d985c14780c5702138c5636, type: 3}
       propertyPath: sprite
@@ -31114,11 +31154,19 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5604585467200129355, guid: 1a4de5e38d985c14780c5702138c5636, type: 3}
+      propertyPath: attackDelay
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5604585467200129355, guid: 1a4de5e38d985c14780c5702138c5636, type: 3}
       propertyPath: enemySprite
+      value: 
+      objectReference: {fileID: 841881235}
+    - target: {fileID: 5604585467200129355, guid: 1a4de5e38d985c14780c5702138c5636, type: 3}
+      propertyPath: enemyAnimator
       value: 
       objectReference: {fileID: 841881238}
     - target: {fileID: 5604585467200129355, guid: 1a4de5e38d985c14780c5702138c5636, type: 3}
-      propertyPath: enemyAnimator
+      propertyPath: spriteAnimator
       value: 
       objectReference: {fileID: 841881238}
     - target: {fileID: 8552981281164907201, guid: 1a4de5e38d985c14780c5702138c5636, type: 3}
@@ -31127,6 +31175,18 @@ PrefabInstance:
       objectReference: {fileID: 1767681270}
     - target: {fileID: 8552981281164907201, guid: 1a4de5e38d985c14780c5702138c5636, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8552981281164907201, guid: 1a4de5e38d985c14780c5702138c5636, type: 3}
+      propertyPath: pathRefind
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 8552981281164907201, guid: 1a4de5e38d985c14780c5702138c5636, type: 3}
+      propertyPath: moveInterval
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8552981281164907201, guid: 1a4de5e38d985c14780c5702138c5636, type: 3}
+      propertyPath: rotateToPlayerWhenClose
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

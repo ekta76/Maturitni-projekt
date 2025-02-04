@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede9a256a1f8b6740b9b50ab80d86fcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyObject: {fileID: 0}
+  enemyObject: {fileID: 4598324708481333736}
   maxHealth: 100
 --- !u!114 &914460262411824213
 MonoBehaviour:
@@ -277,6 +277,8 @@ MonoBehaviour:
   damageAmount: 10
   attackDelay: 1
   triggerCollider: {fileID: 8572049541053929650}
+  enemyAnimator: {fileID: 679412765697954130}
+  enemySprite: {fileID: 914460261051572549}
 --- !u!1 &4598324708481333736
 GameObject:
   m_ObjectHideFlags: 0
