@@ -129,6 +129,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    /*
     void OnGUI()
     {
         // Debugging health bars
@@ -137,4 +138,5 @@ public class PlayerHealth : MonoBehaviour
             GUI.Label(new Rect(10, 10 + (i * 20), 300, 20), $"Health Bar {i + 1}: {healthBars[i].currentHealth}/{healthBars[i].maxHealth}");
         }
     }
+    */
 }

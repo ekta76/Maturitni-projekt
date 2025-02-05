@@ -51,7 +51,7 @@ public class GateAnimation : MonoBehaviour
     private void DetectChainClick()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, chainLayer))
+        if (Physics.Raycast(ray, out RaycastHit hit, 1f, chainLayer))
         {
             if (hit.collider.CompareTag("FrontChain") && hit.collider.gameObject == leftChainAnimator.gameObject)
             {

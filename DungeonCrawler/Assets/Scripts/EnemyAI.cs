@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Pathfinding))]
@@ -16,6 +17,13 @@ public class EnemyAI : MonoBehaviour
     public float enemyFollowSpeed = 2f;
     private Vector3 enemySpritePosition = new Vector3(0f, 0f, 0f);
     private float currentCooldown = 0f;
+    public GameObject attackArea;
+    private bool isPlayerInAttackArea = false;
+    public float moveAfterAttacking = 1f;
+    public float rotateAfterMovementAttack = 1f;
+    private bool rotationAfterMovementAttack = false;
+    private Grid gridManager;
+    private bool canChasePlayer = false; // New flag for checking if enemy is next to player
 
     private Pathfinding pathfinding;
     private Vector3[] currentPath;
@@ -27,8 +35,21 @@ public class EnemyAI : MonoBehaviour
 
     private void Start()
     {
+        gridManager = FindObjectOfType<Grid>();
         pathfinding = GetComponent<Pathfinding>();
         mainCamera = Camera.main;
+
+        // Make sure to find the attack area child if it's not set
+        if (attackArea == null)
+        {
+            attackArea = transform.Find("AttackArea").gameObject; // Assuming your child is named "AttackArea"
+        }
+
+        // Ensure attack area has a trigger collider
+        if (attackArea.GetComponent<Collider>() == null)
+        {
+            Debug.LogWarning("No collider found on the attack area. Make sure it has a collider set as a trigger.");
+        }
 
         if (enemySprite != null)
         {
@@ -40,8 +61,6 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-
-
         // Update cooldown timer
         if (currentCooldown > 0)
         {
@@ -49,17 +68,74 @@ public class EnemyAI : MonoBehaviour
         }
 
         // If the cooldown is finished and not currently moving, start pathfinding or movement
-        if (currentCooldown <= 0 && !isMoving && currentPath != null && targetIndex < currentPath.Length)
+        if (currentCooldown <= 0 && !isMoving && currentPath != null && targetIndex < currentPath.Length && isPlayerInAttackArea != true)
         {
-            StartCoroutine(MoveToNextNode());
+            if (canChasePlayer)
+            {
+                StartCoroutine(MoveToNextNode());
+            }
         }
 
         UpdateSpritePosition();
         UpdateSpriteRotation();
 
-        // Rotate towards player if within checkDistance
-        RotateTowardsPlayerIfClose();
+        if (rotationAfterMovementAttack != true)
+        {
+            // Rotate towards player if within checkDistance
+            RotateTowardsPlayerIfClose();
+        }
+
+        // Check if the player is adjacent in all 9 directions
+        CheckIfPlayerIsAdjacent();
     }
+
+    public void OnPlayerEnteredAttackRange()
+    {
+        isPlayerInAttackArea = true;
+        rotationAfterMovementAttack = true;
+        StopCoroutine(MoveToNextNode());
+        Debug.Log("Player entered attack range. Start attacking!");
+    }
+
+    // Called when player exits the attack range
+    public void OnPlayerExitedAttackRange()
+    {
+        Debug.Log("Player left attack range. Stop attacking.");
+        StartCoroutine(WaitAndStartMoving());
+    }
+
+    // Coroutine to handle waiting before moving
+    private IEnumerator WaitAndStartMoving()
+    {
+        // Wait for 1 second
+        yield return new WaitForSeconds(moveAfterAttacking);
+        MoveForward();
+        yield return new WaitForSeconds(rotateAfterMovementAttack);
+        gridManager.UpdateGridFromAnimation();
+        rotationAfterMovementAttack = false;
+        isPlayerInAttackArea = false;
+    }
+
+    private void MoveForward()
+    {
+        // Get the direction the enemy is facing (its forward direction)
+        Vector3 forwardDirection = transform.forward;
+
+        // Check if there is any obstacle (like the player) in the way within a certain distance
+        float checkDistance = 1f; // You can modify this based on your game design
+        if (Physics.CheckSphere(transform.position + forwardDirection * 0.5f, checkDistance, unwalkableMasks))
+        {
+            Debug.Log("Player is in the way. Cannot move.");
+            return; // If the player is in the way, don't move
+        }
+
+        // Move the enemy 1 unit in that direction
+        transform.position += forwardDirection * 1f; // 1f is the distance (you can change this if you want a different distance)
+
+        // Optional: Round position to maintain block-based grid alignment
+        RoundPosition();
+    }
+
 
     private IEnumerator UpdatePathRoutine()
     {
@@ -118,8 +194,6 @@ public class EnemyAI : MonoBehaviour
 
         isMoving = false;
     }
-
-
 
     private Vector3 GetAdjustedPositionNextToPlayer()
     {
@@ -182,6 +256,7 @@ public class EnemyAI : MonoBehaviour
         if (enemySprite != null)
         {
             Vector3 desiredPosition = transform.position + transform.rotation * enemySpritePosition;
+            desiredPosition.y = -0.17f;  // Set the y value to -0.17
             enemySprite.transform.position = Vector3.MoveTowards(enemySprite.transform.position, desiredPosition, Time.deltaTime * enemyFollowSpeed);
         }
     }
@@ -229,6 +304,33 @@ public class EnemyAI : MonoBehaviour
             return new Vector2(1f, 0f); // Right
         else
             return new Vector2(0f, -1f); // Front
+    }
+
+    private void CheckIfPlayerIsAdjacent()
+    {
+        // Check if player is next to the enemy in all 9 directions
+        Vector3 playerPos = player.position;
+        List<Vector3> positionsToCheck = new List<Vector3>
+        {
+            new Vector3(playerPos.x + 0.5f, 0, playerPos.z),
+            new Vector3(playerPos.x - 0.5f, 0, playerPos.z),
+            new Vector3(playerPos.x, 0, playerPos.z + 0.5f),
+            new Vector3(playerPos.x, 0, playerPos.z - 0.5f),
+            new Vector3(playerPos.x + 0.5f, 0, playerPos.z + 0.5f),
+            new Vector3(playerPos.x + 0.5f, 0, playerPos.z - 0.5f),
+            new Vector3(playerPos.x - 0.5f, 0, playerPos.z + 0.5f),
+            new Vector3(playerPos.x - 0.5f, 0, playerPos.z - 0.5f),
+            new Vector3(playerPos.x, 0, playerPos.z)
+        };
+
+        foreach (Vector3 pos in positionsToCheck)
+        {
+            if (Vector3.Distance(transform.position, pos) <= checkDistance && !Physics.CheckSphere(pos, 0.1f, unwalkableMasks))
+            {
+                canChasePlayer = true;  // Start chasing
+                break;
+            }
+        }
     }
 
     private IEnumerator RotateAndWaitBeforeMoving()

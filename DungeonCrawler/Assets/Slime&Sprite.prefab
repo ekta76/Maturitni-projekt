@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 914460261051572548}
   - component: {fileID: 914460261051572545}
   - component: {fileID: 679412765697954130}
-  - component: {fileID: 4746636288374921638}
   m_Layer: 0
   m_Name: GFX
   m_TagString: Untagged
@@ -107,18 +106,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4746636288374921638
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 914460261051572549}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c135519b5cb2844e996cb047846e56c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &914460262411824211
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,6 +170,7 @@ MonoBehaviour:
   player: {fileID: 0}
   pathRefind: 0.05
   moveInterval: 1
+  rotateToPlayerWhenClose: 1
   checkDistance: 1
   unwalkableMasks:
     serializedVersion: 2
@@ -190,6 +178,11 @@ MonoBehaviour:
   enemySprite: {fileID: 914460261051572549}
   hitbox: {fileID: 2401833687840979915}
   enemyFollowSpeed: 2
+  attackArea: {fileID: 1157613155056813083}
+  isPlayerInAttackArea: 0
+  moveAfterAttacking: 1
+  rotateAfterMovementAttack: 1
+  rotationAfterMovementAttack: 0
 --- !u!114 &914460262411824212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,6 +272,7 @@ MonoBehaviour:
   triggerCollider: {fileID: 8572049541053929650}
   enemyAnimator: {fileID: 679412765697954130}
   enemySprite: {fileID: 914460261051572549}
+  enemyAI: {fileID: 8552981281164907201}
 --- !u!1 &4598324708481333736
 GameObject:
   m_ObjectHideFlags: 0

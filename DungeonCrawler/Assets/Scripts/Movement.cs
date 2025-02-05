@@ -66,8 +66,10 @@ public class Movement : MonoBehaviour
     private IEnumerator MovementCooldown()
     {
         canMove = false;
+        isMoving = true;
         yield return new WaitForSeconds(movementCooldown);
         canMove = true;
+        isMoving = false;
     }
 
     private void HandleRotation()
@@ -100,6 +102,7 @@ public class Movement : MonoBehaviour
     private IEnumerator SmoothRotate(float angle)
     {
         isMoving = true;
+        canMove = false;
         Quaternion originalRotation = transform.rotation;
         Vector3 targetAngle = transform.eulerAngles + Vector3.up * angle;
         Quaternion targetRotation = Quaternion.Euler(RoundVector(targetAngle));
@@ -114,6 +117,7 @@ public class Movement : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(RoundVector(targetRotation.eulerAngles));
         isMoving = false;
+        canMove = true;
     }
 
     private void UpdateCameraPosition()

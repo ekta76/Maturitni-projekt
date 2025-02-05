@@ -10,6 +10,7 @@ public class EnemyAttack : MonoBehaviour
     public Collider triggerCollider; // The collider used to detect the player
     public Animator enemyAnimator;
     public GameObject enemySprite;
+    public EnemyAI enemyAI;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -21,6 +22,7 @@ public class EnemyAttack : MonoBehaviour
             if (attackCoroutine == null)
             {
                 attackCoroutine = StartCoroutine(AttackSequence(other));
+                enemyAI.OnPlayerEnteredAttackRange();
             }
         }
     }
@@ -36,6 +38,7 @@ public class EnemyAttack : MonoBehaviour
             {
                 StopCoroutine(attackCoroutine);
                 attackCoroutine = null;
+                enemyAI.OnPlayerExitedAttackRange();
             }
         }
     }

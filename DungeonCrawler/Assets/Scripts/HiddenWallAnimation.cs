@@ -49,7 +49,7 @@ public class HiddenWallAnimation : MonoBehaviour
     private void DetectButtonClick()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, chainLayer))
+        if (Physics.Raycast(ray, out RaycastHit hit, 1f, chainLayer))
         {
             if (hit.collider.CompareTag("Button") && hit.collider.gameObject == buttonAnimator.gameObject)
             {
