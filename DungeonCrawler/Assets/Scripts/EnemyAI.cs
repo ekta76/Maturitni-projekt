@@ -18,10 +18,10 @@ public class EnemyAI : MonoBehaviour
     private Vector3 enemySpritePosition = new Vector3(0f, 0f, 0f);
     private float currentCooldown = 0f;
     public GameObject attackArea;
-    private bool isPlayerInAttackArea = false;
     public float moveAfterAttacking = 1f;
     public float rotateAfterMovementAttack = 1f;
-    private bool rotationAfterMovementAttack = false;
+    public bool isPlayerInAttackArea = false;
+    public bool rotationAfterMovementAttack = false;
     private Grid gridManager;
     private bool canChasePlayer = false; // New flag for checking if enemy is next to player
 
@@ -275,6 +275,9 @@ public class EnemyAI : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
         enemySprite.transform.rotation = Quaternion.Slerp(enemySprite.transform.rotation, targetRotation, Time.deltaTime * 5f); // Adjust speed as needed
 
+        // Add 180 degrees to the Y rotation to correct the sprite's lighting issue
+        enemySprite.transform.rotation *= Quaternion.Euler(0, 180, 0);
+
         // Update animation parameters
         if (animator != null)
         {
@@ -299,9 +302,9 @@ public class EnemyAI : MonoBehaviour
         if (angle > -45f && angle <= 45f)
             return new Vector2(0f, 1f); // Back
         else if (angle > 45f && angle <= 135f)
-            return new Vector2(-1f, 0f); // Left
+            return new Vector2(1f, 0f); // Left
         else if (angle > -135f && angle <= -45f)
-            return new Vector2(1f, 0f); // Right
+            return new Vector2(-1f, 0f); // Right
         else
             return new Vector2(0f, -1f); // Front
     }

@@ -9,6 +9,8 @@ TagManager:
   - FrontChain
   - BackChain
   - Button
+  - Torch
+  - PlayerLight
   layers:
   - Default
   - TransparentFX
@@ -19,7 +21,7 @@ TagManager:
   - Player
   - Wall
   - WallAndPlayer
-  - 
+  - Torch
   - 
   - 
   - 
