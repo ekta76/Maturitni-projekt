@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c4aff28f14c1cbd49b340408ac0ebdd4
+guid: ef2788480ff8713449fd7fe00d0d7e9d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -44,7 +44,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 32
@@ -117,13 +117,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: gateLeverOpen_0
+      name: WoodenLeverClosing_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 4
-        height: 17
+        width: 6
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +131,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1d6d443523a3ddf4e83e32d80a6a13a8
-      internalID: 2056623785
+      spriteID: 1b9c68a4b1962bc47a03aef8ed218af9
+      internalID: -53847381
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gateLeverOpen_1
+      name: WoodenLeverClosing_1
       rect:
         serializedVersion: 2
-        x: 4
+        x: 6
         y: 0
-        width: 4
-        height: 17
+        width: 6
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,41 +152,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 150c15b185752d344b809179e31b60d6
-      internalID: -724238321
+      spriteID: 94d6b5514ff6605439f5b17c7426cfcf
+      internalID: -478069503
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gateLeverOpen_2
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 0
-        width: 4
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0a4a81e59c9dcbc41a27cffd726ee071
-      internalID: 1167197251
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: gateLeverOpen_3
+      name: WoodenLeverClosing_2
       rect:
         serializedVersion: 2
         x: 12
         y: 0
-        width: 4
-        height: 17
+        width: 6
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,20 +173,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 584b9a82cfb87e54687050155d8394a7
-      internalID: -482482362
+      spriteID: 68708f177361caf439d7ae9803061149
+      internalID: -1386475250
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: gateLeverOpen_4
+      name: WoodenLeverClosing_3
       rect:
         serializedVersion: 2
-        x: 16
+        x: 18
         y: 0
-        width: 4
-        height: 17
+        width: 6
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,8 +194,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 08fe1b0beb414e644abd0f4e76076a5f
-      internalID: -1128582147
+      spriteID: b15347f0f5be1904cba03619d80d7ac5
+      internalID: 870138497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WoodenLeverClosing_4
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 0
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1ebabf3c8f3fa44fb51dc8144373779
+      internalID: -902652622
       vertices: []
       indices: 
       edges: []
@@ -232,11 +232,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      gateLeverOpen_0: 2056623785
-      gateLeverOpen_1: -724238321
-      gateLeverOpen_2: 1167197251
-      gateLeverOpen_3: -482482362
-      gateLeverOpen_4: -1128582147
+      WoodenLeverClosing_0: -53847381
+      WoodenLeverClosing_1: -478069503
+      WoodenLeverClosing_2: -1386475250
+      WoodenLeverClosing_3: 870138497
+      WoodenLeverClosing_4: -902652622
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

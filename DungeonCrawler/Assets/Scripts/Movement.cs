@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -16,9 +17,29 @@ public class Movement : MonoBehaviour
     private Vector3 lastSafePosition;
     public GameObject eventSystem;
 
+    public string[] clickableTags = { "FrontChain", "BackChain", "Button", "Lever" };
+    private List<Collider> clickableColliders = new List<Collider>();
+
     void Start()
     {
         lastSafePosition = transform.position;
+        FindClickableObjects();
+    }
+
+    private void FindClickableObjects()
+    {
+        foreach (string tag in clickableTags)
+        {
+            GameObject[] objects = GameObject.FindGameObjectsWithTag(tag);
+            foreach (GameObject obj in objects)
+            {
+                Collider col = obj.GetComponent<Collider>();
+                if (col != null)
+                {
+                    clickableColliders.Add(col);
+                }
+            }
+        }
     }
 
     void Update()
@@ -37,10 +58,18 @@ public class Movement : MonoBehaviour
 
         if (isMoving)
         {
-            eventSystem.SetActive(false);
+            SetClickableColliders(false);
         } else
         {
-            eventSystem.SetActive(true);
+            SetClickableColliders(true);
+        }
+    }
+
+    private void SetClickableColliders(bool state)
+    {
+        foreach (Collider col in clickableColliders)
+        {
+            col.enabled = state;
         }
     }
 
