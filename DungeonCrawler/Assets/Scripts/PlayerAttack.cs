@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class PlayerAttack : MonoBehaviour
@@ -18,6 +19,7 @@ public class PlayerAttack : MonoBehaviour
     private bool[] handPairCooldowns; // Cooldown state for each pair of hands
     public Collider attackRangeCollider; // Single collider for attack range detection
     public Animator attackAnimation;
+    public GameObject damageTextPrefab;
 
     private Color defaultButtonColor; // Store the default button color
 
@@ -144,6 +146,12 @@ public class PlayerAttack : MonoBehaviour
         {
             int handIndex = hands[0].damageAmount; // Example of getting damageAmount dynamically
             enemyHealth.TakeDamage(handIndex); // Call TakeDamage on the enemy health
+
+            /*
+            Vector2 screenPos = Camera.main.WorldToScreenPoint(hitCollider.transform.position);
+            DamageNumberManager.Instance.ShowDamage(handIndex, screenPos);
+            */
+
             Debug.Log($"Enemy {hitCollider.name} took damage!");
         }
     }
