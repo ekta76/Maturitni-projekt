@@ -17,7 +17,7 @@ public class EnemyHealth : MonoBehaviour
     {
         // Decrease health by the damage amount
         currentHealth -= amount;
-        Vector3 randomness = new Vector3(Random.Range(0.1f, -0.1f), Random.Range(0.1f, -0.1f), 0);
+        Vector3 randomness = new Vector3(Random.Range(0.2f, -0.2f), Random.Range(0.15f, -0.15f), 0);
         DamageNumberGenerator3D.current.CreatePopUp(transform.position + randomness, amount.ToString());
 
         // Check if health is less than or equal to 0, then destroy the enemy

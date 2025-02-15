@@ -113,11 +113,11 @@ public class Movement : MonoBehaviour
 
     private void HandleRotation()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             StartCoroutine(SmoothRotate(-90)); // Rotate left
         }
-        else if (Input.GetKeyDown(KeyCode.E))
+        else if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             StartCoroutine(SmoothRotate(90)); // Rotate right
         }
