@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-public class Options : MonoBehaviour
+public class OptionsGame : MonoBehaviour
 {
     public AudioMixer audioMixer;
 
     public TMPro.TMP_Dropdown resolutionDropdown;
 
-    private Resolution[] resolutions;
+    Resolution[] resolutions;
 
     void Start()
     {

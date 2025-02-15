@@ -5,9 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    public static bool GameIsPaused = false;
+    public bool GameIsPaused = false;
 
     public GameObject pauseMenuUI;
+    public GameObject optionsMenu;
 
     public void Update()
     {
@@ -40,8 +41,8 @@ public class PauseMenu : MonoBehaviour
 
     public void LoadMenu()
     {
-        SceneManager.LoadScene("MainMenu");
         Resume();
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void QuitGame()

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Movement : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Movement : MonoBehaviour
     public float cameraFollowSpeed = 4f; // Speed at which the camera follows the player
     private Vector3 cameraOffset = new Vector3(0, -0.2f, -0.25f);
     private Vector3 lastSafePosition;
+    public GameObject eventSystem;
 
     void Start()
     {
@@ -32,6 +34,14 @@ public class Movement : MonoBehaviour
         UpdateCameraPosition();
         RoundPlayerPosition();
         CheckIfStuck();
+
+        if (isMoving)
+        {
+            eventSystem.SetActive(false);
+        } else
+        {
+            eventSystem.SetActive(true);
+        }
     }
 
     private void HandleMovement()

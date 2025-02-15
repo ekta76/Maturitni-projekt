@@ -11,6 +11,7 @@ TagManager:
   - Button
   - Torch
   - PlayerLight
+  - PlayerReveal
   layers:
   - Default
   - TransparentFX
