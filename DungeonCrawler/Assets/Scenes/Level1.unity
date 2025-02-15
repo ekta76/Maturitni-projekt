@@ -10431,7 +10431,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &302385090
 Transform:
   m_ObjectHideFlags: 0
@@ -25631,7 +25631,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1850966520}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Options, Assembly-CSharp
         m_MethodName: setResolution
         m_Mode: 3
@@ -37121,7 +37121,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1058757669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56885,7 +56885,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1850966520}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Options, Assembly-CSharp
         m_MethodName: setVolume
         m_Mode: 4
@@ -58846,7 +58846,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1850966520}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Options, Assembly-CSharp
         m_MethodName: setFullscreen
         m_Mode: 6
@@ -64204,7 +64204,6 @@ GameObject:
   - component: {fileID: 1850966518}
   - component: {fileID: 1850966517}
   - component: {fileID: 1850966520}
-  - component: {fileID: 1850966521}
   m_Layer: 0
   m_Name: OptionsMenu
   m_TagString: Untagged
@@ -64308,23 +64307,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1850966515}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd27dc3bc6ddfba40bce0d7dd776c1d8, type: 3}
+  m_Script: {fileID: 11500000, guid: 44ee5d68e0a1f804c93c80b33ad68820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: 357ee3f9aeba699449c6cd234a7e0ce1, type: 2}
   resolutionDropdown: {fileID: 736608404}
---- !u!225 &1850966521
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1850966515}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1001 &1854158407
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -72796,7 +72783,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 273227348120190097, guid: 39c2d7d90ba2a0d48af43d6980842ebc, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 273227348120190098, guid: 39c2d7d90ba2a0d48af43d6980842ebc, type: 3}
       propertyPath: m_RootOrder

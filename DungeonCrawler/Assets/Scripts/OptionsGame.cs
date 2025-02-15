@@ -2,40 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.UI;
+using TMPro;
 
 public class OptionsGame : MonoBehaviour
 {
     public AudioMixer audioMixer;
+    public TMP_Dropdown resolutionDropdown;
 
-    public TMPro.TMP_Dropdown resolutionDropdown;
-
-    Resolution[] resolutions;
+    private List<Resolution> uniqueResolutions = new List<Resolution>();
 
     void Start()
     {
         Debug.Log("Options menu initialized");
-        resolutions = Screen.resolutions;
 
-        resolutionDropdown.ClearOptions(); // Ensure it's cleared before adding new ones
+        Resolution[] resolutions = Screen.resolutions;
+        resolutionDropdown.ClearOptions(); // Clear existing options
 
         List<string> options = new List<string>();
-
-        HashSet<string> uniqueResolutions = new HashSet<string>();
+        HashSet<string> uniqueResSet = new HashSet<string>();
 
         int currentResolutionIndex = 0;
+        int optionIndex = 0;
 
-        for (int i = 0; i < resolutions.Length; i++)
+        foreach (Resolution res in resolutions)
         {
-            string option = resolutions[i].width + "x" + resolutions[i].height;
-            if (uniqueResolutions.Add(option)) // Only adds if it's unique
+            string option = res.width + "x" + res.height;
+            if (uniqueResSet.Add(option)) // Only add unique resolutions
             {
                 options.Add(option);
-            }
+                uniqueResolutions.Add(res);
 
-            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
-            {
-                currentResolutionIndex = i;
+                // Use Screen.width & Screen.height instead of Screen.currentResolution
+                if (res.width == Screen.width && res.height == Screen.height)
+                {
+                    currentResolutionIndex = optionIndex;
+                }
+                optionIndex++;
             }
         }
 
@@ -44,20 +46,37 @@ public class OptionsGame : MonoBehaviour
         resolutionDropdown.RefreshShownValue();
     }
 
-
     public void setResolution(int resolutionIndex)
     {
-        Resolution resolution = resolutions[resolutionIndex];
-        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        if (resolutionIndex >= 0 && resolutionIndex < uniqueResolutions.Count)
+        {
+            Resolution resolution = uniqueResolutions[resolutionIndex];
+
+            // Use coroutine to ensure resolution change applies even when paused
+            StartCoroutine(ApplyResolution(resolution.width, resolution.height));
+        }
     }
 
-    public void setVolume(float volume)
+    private IEnumerator ApplyResolution(int width, int height)
     {
-        audioMixer.SetFloat("masterVolume", volume);
+        yield return new WaitForEndOfFrame(); // Wait to ensure resolution is applied properly
+        Screen.SetResolution(width, height, Screen.fullScreenMode);
+        Debug.Log($"Resolution set to: {width}x{height}");
     }
 
     public void setFullscreen(bool isFullscreen)
     {
-        Screen.fullScreen = isFullscreen;
+        FullScreenMode mode = isFullscreen ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
+
+        // Apply fullscreen mode explicitly with resolution settings
+        StartCoroutine(ApplyFullscreen(mode));
+    }
+
+    private IEnumerator ApplyFullscreen(FullScreenMode mode)
+    {
+        yield return new WaitForEndOfFrame();
+        Screen.fullScreenMode = mode;
+        Screen.SetResolution(Screen.width, Screen.height, mode);
+        Debug.Log($"Fullscreen mode set to: {mode}");
     }
 }
