@@ -13,6 +13,7 @@ TagManager:
   - PlayerLight
   - PlayerReveal
   - Lever
+  - Audio
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - Wall
   - WallAndPlayer
   - Torch
-  - 
+  - Map
   - 
   - 
   - 

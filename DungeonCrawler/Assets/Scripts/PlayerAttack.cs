@@ -26,6 +26,8 @@ public class PlayerAttack : MonoBehaviour
     // Reference to PlayerHealth script attached to the Player object
     public PlayerHealth playerHealth;
 
+    AudioManager audioManager;
+
     private void Start()
     {
         if (hands.Length % 2 != 0)
@@ -67,6 +69,11 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     private void Update()
     {
         if (playerHealth != null && playerHealth.IsDead())
@@ -104,6 +111,7 @@ public class PlayerAttack : MonoBehaviour
         // Play attack animation if Animator is assigned
         if (attackAnimation != null)
         {
+            audioManager.PlaySFX(audioManager.slash);
             attackAnimation.SetTrigger("Attack");
         }
         else
@@ -124,7 +132,7 @@ public class PlayerAttack : MonoBehaviour
             if (hitCollider.CompareTag("Enemy"))
             {
                 enemyInRange = true;
-                DealDamage(hitCollider); // Deal damage to the enemy if it's in range
+                DealDamage(hitCollider, handIndex); // Deal damage to the enemy if it's in range
                 break; // Only damage the first enemy in range
             }
         }
@@ -138,14 +146,14 @@ public class PlayerAttack : MonoBehaviour
         StartCoroutine(StartPairCooldown(pairIndex, hand.cooldownDuration));
     }
 
-    private void DealDamage(Collider hitCollider)
+    private void DealDamage(Collider hitCollider, int handIndex)
     {
         // Find the enemy's health component and apply damage
         EnemyHealth enemyHealth = hitCollider.GetComponent<EnemyHealth>();
         if (enemyHealth != null)
         {
-            int handIndex = hands[0].damageAmount; // Example of getting damageAmount dynamically
-            enemyHealth.TakeDamage(handIndex); // Call TakeDamage on the enemy health
+            int damageAmount = hands[handIndex].damageAmount; // Example of getting damageAmount dynamically
+            enemyHealth.TakeDamage(damageAmount); // Call TakeDamage on the enemy health
 
             /*
             Vector2 screenPos = Camera.main.WorldToScreenPoint(hitCollider.transform.position);

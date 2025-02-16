@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1629555742485112570}
   - component: {fileID: 1629555742485112569}
   - component: {fileID: 5368685206240905776}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CubeFloorBlueUnlit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1629555742485112572}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

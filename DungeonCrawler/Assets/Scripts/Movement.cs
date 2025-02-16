@@ -20,10 +20,17 @@ public class Movement : MonoBehaviour
     public string[] clickableTags = { "FrontChain", "BackChain", "Button", "Lever" };
     private List<Collider> clickableColliders = new List<Collider>();
 
+    AudioManager audioManager;
+
     void Start()
     {
         lastSafePosition = transform.position;
         FindClickableObjects();
+    }
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     private void FindClickableObjects()
@@ -80,18 +87,22 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W))
         {
             direction = transform.forward;
+            audioManager.PlaySFX(audioManager.footstep);
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
             direction = -transform.forward;
+            audioManager.PlaySFX(audioManager.footstep);
         }
         else if (Input.GetKeyDown(KeyCode.A))
         {
             direction = -transform.right;
+            audioManager.PlaySFX(audioManager.footstep);
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
             direction = transform.right;
+            audioManager.PlaySFX(audioManager.footstep);
         }
 
         if (direction != Vector3.zero && CanMove(direction))

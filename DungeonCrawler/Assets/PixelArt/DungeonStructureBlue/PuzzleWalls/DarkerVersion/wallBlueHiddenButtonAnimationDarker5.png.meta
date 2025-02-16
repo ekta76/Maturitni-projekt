@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f2f786a559230d74d902920fb44d95b3
+guid: 9848c63ac62c1fe4ca3409079be8a99f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -131,8 +131,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 43d13b8211f69a545be9358b95d41d68
-      internalID: -287771795
+      spriteID: 2d26893f4edd60a488e12d291a578763
+      internalID: 582339271
       vertices: []
       indices: 
       edges: []
@@ -152,8 +152,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bb685573001ead9428a21febc97f2f11
-      internalID: -690973919
+      spriteID: 2512547778f03ea48a86e2ef654e172f
+      internalID: -1279213637
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 3e74b450875b331479d46b2966e138a3
+    spriteID: b386b5202e358d2418dc8cbbd3081b11
     internalID: 0
     vertices: []
     indices: 
@@ -169,8 +169,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      wallBlueHiddenButtonAnimationDarker5_0: -287771795
-      wallBlueHiddenButtonAnimationDarker5_1: -690973919
+      wallBlueHiddenButtonAnimationDarker5_0: 582339271
+      wallBlueHiddenButtonAnimationDarker5_1: -1279213637
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -7,57 +7,121 @@ using UnityEngine.UI;
 public class Options : MonoBehaviour
 {
     public AudioMixer audioMixer;
-
     public TMPro.TMP_Dropdown resolutionDropdown;
+    public Slider masterVolumeSlider;
+    public Slider soundFXVolumeSlider;
+    public Slider musicVolumeSlider;
+    public Toggle fullscreenToggle;
 
-    private Resolution[] resolutions;
+    private List<Resolution> uniqueResolutions = new List<Resolution>();
 
     void Start()
     {
         Debug.Log("Options menu initialized");
-        resolutions = Screen.resolutions;
 
-        resolutionDropdown.ClearOptions(); // Ensure it's cleared before adding new ones
+        // Load Resolution
+        Resolution[] resolutions = Screen.resolutions;
+        resolutionDropdown.ClearOptions();
 
         List<string> options = new List<string>();
-
-        HashSet<string> uniqueResolutions = new HashSet<string>();
+        HashSet<string> uniqueResSet = new HashSet<string>();
 
         int currentResolutionIndex = 0;
+        int optionIndex = 0;
 
-        for (int i = 0; i < resolutions.Length; i++)
+        foreach (Resolution res in resolutions)
         {
-            string option = resolutions[i].width + "x" + resolutions[i].height;
-            if (uniqueResolutions.Add(option)) // Only adds if it's unique
+            string option = res.width + "x" + res.height;
+            if (uniqueResSet.Add(option))
             {
                 options.Add(option);
-            }
+                uniqueResolutions.Add(res);
 
-            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
-            {
-                currentResolutionIndex = i;
+                if (res.width == Screen.currentResolution.width && res.height == Screen.currentResolution.height)
+                {
+                    currentResolutionIndex = optionIndex;
+                }
+                optionIndex++;
             }
         }
 
         resolutionDropdown.AddOptions(options);
+
+        // Load saved resolution
+        if (PlayerPrefs.HasKey("ResolutionIndex"))
+        {
+            currentResolutionIndex = PlayerPrefs.GetInt("ResolutionIndex");
+            setResolution(currentResolutionIndex);
+        }
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+
+        // Load saved volume settings
+        if (PlayerPrefs.HasKey("MasterVolume"))
+        {
+            float volume = PlayerPrefs.GetFloat("MasterVolume");
+            audioMixer.SetFloat("masterVolume", volume);
+            masterVolumeSlider.value = volume;
+        }
+        if (PlayerPrefs.HasKey("SFXVolume"))
+        {
+            float volume = PlayerPrefs.GetFloat("SFXVolume");
+            audioMixer.SetFloat("sfxVolume", volume);
+            soundFXVolumeSlider.value = volume;
+        }
+        if (PlayerPrefs.HasKey("MusicVolume"))
+        {
+            float volume = PlayerPrefs.GetFloat("MusicVolume");
+            audioMixer.SetFloat("musicVolume", volume);
+            musicVolumeSlider.value = volume;
+        }
+
+        // Load saved fullscreen mode
+        if (PlayerPrefs.HasKey("Fullscreen"))
+        {
+            bool isFullscreen = PlayerPrefs.GetInt("Fullscreen") == 1;
+            Screen.fullScreen = isFullscreen;
+            fullscreenToggle.isOn = isFullscreen;
+        }
     }
 
 
     public void setResolution(int resolutionIndex)
     {
-        Resolution resolution = resolutions[resolutionIndex];
-        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        if (resolutionIndex >= 0 && resolutionIndex < uniqueResolutions.Count)
+        {
+            Resolution resolution = uniqueResolutions[resolutionIndex];
+            Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreenMode);
+            PlayerPrefs.SetInt("ResolutionIndex", resolutionIndex); // Save resolution index
+            PlayerPrefs.Save();
+        }
     }
 
-    public void setVolume(float volume)
+    public void setVolumeMaster(float volume)
     {
         audioMixer.SetFloat("masterVolume", volume);
+        PlayerPrefs.SetFloat("MasterVolume", volume); // Save volume
+        PlayerPrefs.Save();
+    }
+
+    public void setVolumeMusic(float volume)
+    {
+        audioMixer.SetFloat("musicVolume", volume);
+        PlayerPrefs.SetFloat("MusicVolume", volume); // Save volume
+        PlayerPrefs.Save();
+    }
+
+    public void setVolumeSoundFX(float volume)
+    {
+        audioMixer.SetFloat("sfxVolume", volume);
+        PlayerPrefs.SetFloat("SFXVolume", volume); // Save volume
+        PlayerPrefs.Save();
     }
 
     public void setFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
+        PlayerPrefs.SetInt("Fullscreen", isFullscreen ? 1 : 0); // Save fullscreen mode (1 = true, 0 = false)
+        PlayerPrefs.Save();
     }
 }
