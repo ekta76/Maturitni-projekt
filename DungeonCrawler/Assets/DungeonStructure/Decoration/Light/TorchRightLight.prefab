@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 6840127487998582518}
   - component: {fileID: 6840127487998582519}
   - component: {fileID: 6840127487998582512}
+  - component: {fileID: 1265878971357146589}
+  - component: {fileID: 6176259215639589894}
   m_Layer: 9
   m_Name: TorchRightWall
   m_TagString: Untagged
@@ -119,6 +121,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93153ebbbd8a13d408bb6073f541c908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &1265878971357146589
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6840127487998582513}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.41537857, y: 0.40479943, z: 0.23118329}
+  m_Center: {x: -0.017198563, y: 0.031495824, z: 0.006688595}
+--- !u!114 &6176259215639589894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6840127487998582513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab59b6f21dddf2743baf647a50f09ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  torch: {fileID: 11400000, guid: 46f8075325fbbd34792594348bb96919, type: 2}
 --- !u!1 &8178422593898880562
 GameObject:
   m_ObjectHideFlags: 0
