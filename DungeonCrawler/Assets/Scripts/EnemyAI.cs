@@ -22,7 +22,7 @@ public class EnemyAI : MonoBehaviour
     public float rotateAfterMovementAttack = 1f;
     public bool isPlayerInAttackArea = false;
     public bool rotationAfterMovementAttack = false;
-    private Grid gridManager;
+    public Grid gridManager;
     private bool canChasePlayer = false; // New flag for checking if enemy is next to player
 
     private Pathfinding pathfinding;
@@ -38,6 +38,16 @@ public class EnemyAI : MonoBehaviour
         gridManager = FindObjectOfType<Grid>();
         pathfinding = GetComponent<Pathfinding>();
         mainCamera = Camera.main;
+
+        GameObject playerObject = GameObject.FindWithTag("Player");
+        if (playerObject != null)
+        {
+            player = playerObject.transform;
+        }
+        else
+        {
+            Debug.LogWarning("Player object not found! Make sure the player has the 'Player' tag.");
+        }
 
         // Make sure to find the attack area child if it's not set
         if (attackArea == null)

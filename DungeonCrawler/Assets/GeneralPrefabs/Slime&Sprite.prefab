@@ -197,6 +197,7 @@ MonoBehaviour:
   rotateAfterMovementAttack: 1
   isPlayerInAttackArea: 0
   rotationAfterMovementAttack: 0
+  gridManager: {fileID: 0}
 --- !u!114 &914460262411824212
 MonoBehaviour:
   m_ObjectHideFlags: 0

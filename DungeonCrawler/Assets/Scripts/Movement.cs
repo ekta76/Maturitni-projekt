@@ -206,6 +206,12 @@ public class Movement : MonoBehaviour
                 transform.position = lastSafePosition; // Reset position if stuck inside an enemy
                 break;
             }
+
+            if (collider.CompareTag("Wall"))
+            {
+                transform.position = lastSafePosition; // Reset position if stuck inside a wall
+                break;
+            }
         }
     }
 }
