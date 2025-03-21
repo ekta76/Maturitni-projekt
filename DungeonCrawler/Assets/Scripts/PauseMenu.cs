@@ -10,6 +10,9 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     public GameObject optionsMenu;
 
+    public Animator transitionAnimator;
+    public float transitionTime = 1f;
+
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -42,7 +45,16 @@ public class PauseMenu : MonoBehaviour
     public void LoadMenu()
     {
         Resume();
-        SceneManager.LoadScene("MainMenu");
+        StartCoroutine(playAnimation("MainMenu"));
+    }
+
+    IEnumerator playAnimation(string text)
+    {
+        transitionAnimator.SetTrigger("nextLevel");
+
+        yield return new WaitForSeconds(transitionTime);
+
+        SceneManager.LoadScene(text);
     }
 
     public void QuitGame()
