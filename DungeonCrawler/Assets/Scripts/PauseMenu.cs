@@ -11,21 +11,51 @@ public class PauseMenu : MonoBehaviour
     public GameObject optionsMenu;
 
     public Animator transitionAnimator;
-    public float transitionTime = 1f;
+    public float transitionTime = 2f;
+
+    private InventoryShow inventoryShow;
+
+    private bool canPressEsc = false;
+    private bool couriteHasRun = false;
+
+    private void Start()
+    {
+        inventoryShow = FindObjectOfType<InventoryShow>();
+
+        if (inventoryShow == null)
+        {
+            Debug.LogWarning("InventoryShow script not added!");
+        }
+    }
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (!couriteHasRun)
         {
-            if (GameIsPaused)
+            StartCoroutine(EscKeyStartStop(2.5f));
+            couriteHasRun = true;
+        }
+
+        if (canPressEsc)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                Resume();
-            }
-            else
-            {
-                Pause();
+                if (GameIsPaused)
+                {
+                    Resume();
+                }
+                else
+                {
+                    Pause();
+                }
             }
         }
+    }
+
+    IEnumerator EscKeyStartStop(float time)
+    {
+        yield return new WaitForSeconds(time);
+        canPressEsc = true;
     }
 
     public void Resume()
@@ -33,6 +63,11 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
+
+        if (inventoryShow != null)
+        {
+            inventoryShow.enabled = true;
+        }
     }
 
     void Pause()
@@ -40,11 +75,17 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
+
+        if (inventoryShow != null)
+        {
+            inventoryShow.enabled = false;
+        }
     }
 
     public void LoadMenu()
     {
         Resume();
+        canPressEsc = false;
         StartCoroutine(playAnimation("MainMenu"));
     }
 
@@ -59,6 +100,7 @@ public class PauseMenu : MonoBehaviour
 
     public void QuitGame()
     {
+        canPressEsc = false;
         Application.Quit();
     }
 }

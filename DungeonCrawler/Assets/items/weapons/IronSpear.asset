@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Iron spear
   image: {fileID: 21300000, guid: 89c3a00b81166ae438fa5f11fd8be587, type: 3}
+  description: 
   damage: 6
   attackSpeed: 2
-  hasRange: 0

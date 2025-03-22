@@ -5,6 +5,9 @@ using UnityEngine.UI; // For managing UI elements like images
 
 public class PlayerHealth : MonoBehaviour
 {
+    public GameObject blackImage;
+    public GameObject pauseMenu;
+
     [System.Serializable]
     public class HealthBar
     {
@@ -124,6 +127,8 @@ public class PlayerHealth : MonoBehaviour
         if (!isDead)
         {
             isDead = true;
+            blackImage.SetActive(true);
+            pauseMenu.SetActive(false);
             deathScreenMenu?.gameOver(); // Trigger game-over screen
             Debug.Log("Player is defeated!");
         }

@@ -14,12 +14,21 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void Start()
     {
-        InitialseItem(item);
+        InitialsetItem(item);
     }
 
-    public void InitialseItem(Item newItem)
+    public void InitialsetItem(Item newItem)
     {
-        image.sprite = newItem.image;
+        if (newItem != null)
+        {
+            item = newItem;
+            image.sprite = newItem.image;
+            image.enabled = true;
+        }
+        else
+        {
+            Debug.LogError("No item assigned!");
+        }
     }
 
     private void Awake()
@@ -47,5 +56,11 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         Debug.Log("End drag");
         transform.SetParent(parentAfterDrag);
         image.raycastTarget = true;
+    }
+
+    public void DeleteItem()
+    {
+        Debug.Log("Item deleted: " + item.name);
+        Destroy(gameObject);
     }
 }

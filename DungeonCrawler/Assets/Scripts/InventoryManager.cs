@@ -23,13 +23,12 @@ public class InventoryManager : MonoBehaviour
             }
         }
         return false;
+    }
 
-        void SpawnNewItem(Item item, InventorySlot slot)
-        {
-            GameObject newItemGO = Instantiate(inventoryItemPrefab, slot.transform);
-            InventoryItem inventoryItem = newItemGO.GetComponent<InventoryItem>();
-            inventoryItem.InitialseItem(item);
-        }
-
+    private void SpawnNewItem(Item item, InventorySlot slot)
+    {
+        GameObject newItemGO = Instantiate(inventoryItemPrefab, slot.transform);
+        InventoryItem inventoryItem = newItemGO.GetComponent<InventoryItem>();
+        inventoryItem.InitialsetItem(item);
     }
 }

@@ -4,19 +4,50 @@ using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
 {
-    public InventoryManager inventoryManager;
-    public Item[] itemsToPickup;
+    private InventoryManager inventoryManager;
+    public Item itemsToPickup;
+    private LayerMask itemLayer;
+    public GameObject objectToDestroy;
 
-    public void PickUpItem(int id)
+    private void Awake()
     {
-        bool result = inventoryManager.AddItem(itemsToPickup[id]);
-        if (result == true)
+        inventoryManager = FindObjectOfType<InventoryManager>();
+
+        if (inventoryManager == null)
         {
-            Debug.Log("Item added");
+            Debug.LogError("InventoryManager not found in the scene!");
         }
-        else
+
+        itemLayer = LayerMask.GetMask("Item");
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("ITEM NOT ADDED");
+            PickUpItem();
+        }
+    }
+
+    private void PickUpItem()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, 1f, itemLayer))
+        {
+            if (hit.collider.CompareTag("Item") && hit.collider.gameObject == gameObject)
+            {
+                bool result = inventoryManager.AddItem(itemsToPickup);
+                if (result == true)
+                {
+
+                    Destroy(objectToDestroy);
+                    Debug.Log("Item added");
+                }
+                else
+                {
+                    Debug.Log("ITEM NOT ADDED");
+                }
+            }
         }
     }
 }

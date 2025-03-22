@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 6840127487998582519}
   - component: {fileID: 6840127487998582512}
   - component: {fileID: 1265878971357146589}
-  - component: {fileID: 6176259215639589894}
-  m_Layer: 9
+  - component: {fileID: 6966068379195172530}
+  m_Layer: 11
   m_Name: TorchRightWall
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,7 +134,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.41537857, y: 0.40479943, z: 0.23118329}
   m_Center: {x: -0.017198563, y: 0.031495824, z: 0.006688595}
---- !u!114 &6176259215639589894
+--- !u!114 &6966068379195172530
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,10 +143,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6840127487998582513}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab59b6f21dddf2743baf647a50f09ca2, type: 3}
+  m_Script: {fileID: 11500000, guid: 03a30837b2988614bb44a4e84c08b096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  torch: {fileID: 11400000, guid: 46f8075325fbbd34792594348bb96919, type: 2}
+  itemsToPickup: {fileID: 11400000, guid: 46f8075325fbbd34792594348bb96919, type: 2}
+  objectToDestroy: {fileID: 8178422593898880562}
 --- !u!1 &8178422593898880562
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +157,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8178422593898880561}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: TorchRightLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,7 +195,7 @@ GameObject:
   - component: {fileID: 8178422594449222508}
   - component: {fileID: 8178422594449222509}
   - component: {fileID: 8178422594449222510}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Point Light
   m_TagString: Torch
   m_Icon: {fileID: 0}
@@ -326,7 +327,7 @@ GameObject:
   - component: {fileID: 8178422594463892887}
   - component: {fileID: 8178422594463892888}
   - component: {fileID: 8178422594463892889}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Spot Light
   m_TagString: Torch
   m_Icon: {fileID: 0}
@@ -458,7 +459,7 @@ GameObject:
   - component: {fileID: 8178422595424222751}
   - component: {fileID: 8178422595424222752}
   - component: {fileID: 8178422595424222753}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Point Light (1)
   m_TagString: Torch
   m_Icon: {fileID: 0}

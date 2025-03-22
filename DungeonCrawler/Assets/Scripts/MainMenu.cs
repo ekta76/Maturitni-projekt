@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public Animator animator;
-    public float transitionTime = 1f;
+    public float transitionTime = 2f;
 
      public void playGame()
     {
