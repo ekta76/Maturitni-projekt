@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewArmor", menuName = "Items/Armor")]
-public class Armor : Item
+[CreateAssetMenu(fileName = "NewPants", menuName = "Items/Pants")]
+public class Pants : Item
 {
     public float armorValue;
     public float dodgeChance;

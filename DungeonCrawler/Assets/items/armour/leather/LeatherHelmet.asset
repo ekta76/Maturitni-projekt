@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c302e6c7e60bb68418bc820198af9747, type: 3}
+  m_Script: {fileID: 11500000, guid: e8aa5ad46fb832141bef720781126b0f, type: 3}
   m_Name: LeatherHelmet
   m_EditorClassIdentifier: Assembly-CSharp::Armor
   itemName: Leather helmet
   image: {fileID: 21300000, guid: 9bbb8155adb89054dbdd9dbb98af4320, type: 3}
+  description: 
   armorValue: 3
   dodgeChance: 3
   aggro: 100

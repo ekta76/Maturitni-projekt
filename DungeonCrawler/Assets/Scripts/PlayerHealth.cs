@@ -133,15 +133,4 @@ public class PlayerHealth : MonoBehaviour
             Debug.Log("Player is defeated!");
         }
     }
-
-    /*
-    void OnGUI()
-    {
-        // Debugging health bars
-        for (int i = 0; i < healthBars.Count; i++)
-        {
-            GUI.Label(new Rect(10, 10 + (i * 20), 300, 20), $"Health Bar {i + 1}: {healthBars[i].currentHealth}/{healthBars[i].maxHealth}");
-        }
-    }
-    */
 }

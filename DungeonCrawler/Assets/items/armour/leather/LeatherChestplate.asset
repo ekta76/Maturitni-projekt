@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c302e6c7e60bb68418bc820198af9747, type: 3}
+  m_Script: {fileID: 11500000, guid: 147b6b92e051fda4c9d22226026d8cdf, type: 3}
   m_Name: LeatherChestplate
   m_EditorClassIdentifier: Assembly-CSharp::Armor
   itemName: Leather chestplate
   image: {fileID: 21300000, guid: 91af474a12c9c9b4c9ff11440eb8e9d5, type: 3}
+  description: 
   armorValue: 5
   dodgeChance: 5
   aggro: 100

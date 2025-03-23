@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 public class TrashItem : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Animator trashBin;
-    private bool isHovering = false;
     private bool isDragging = false;
 
     public void OnDrop(PointerEventData eventData)
@@ -23,7 +22,6 @@ public class TrashItem : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     {
         if (eventData.pointerDrag != null)
         {
-            isHovering = true;
             isDragging = true;
             trashBin.SetBool("Hover", true);
         }
@@ -33,7 +31,6 @@ public class TrashItem : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     {
         if (isDragging)
         {
-            isHovering = false;
             isDragging = false;
             trashBin.SetBool("Hover", false);
         }
