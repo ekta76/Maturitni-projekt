@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CharacterSlot : MonoBehaviour, IDropHandler
 {
@@ -18,6 +19,9 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
     public Item currentEquippedItem = null; // Track the currently equipped item
 
     public EquipedTorch equipedTorch;
+
+    public Image handButtonImage;
+    public Sprite defaultHandImage;
 
     // Update method to check if the slot is empty and reset stats if necessary
     void Update()
@@ -46,23 +50,14 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
         }
         else
         {
-            // Swap items if the slot is occupied
-            GameObject current = transform.GetChild(0).gameObject;
-            InventoryItem currentDraggable = current.GetComponent<InventoryItem>();
-
-            if (currentDraggable != null && IsValidItem(currentDraggable))
+            if (dropped.transform.parent != transform.parent)
             {
-                // Unequip the current item before swapping
-                UnequipItem(currentDraggable.item);
-
-                // Swap the items
-                currentDraggable.transform.SetParent(draggableItem.parentAfterDrag);
-                draggableItem.parentAfterDrag = transform;
-
-                EquipItem(draggableItem.item);
-                UnequipItem(currentDraggable.item);
-
-                currentEquippedItem = draggableItem.item;
+                Debug.Log("Cannot swap items!");
+                return;
+            }
+            else
+            {
+                Debug.Log("Slot has an item!");
             }
         }
     }
@@ -97,11 +92,11 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
             // Replace the weapon stats with the new values
             if (playerAttack != null)
             {
-                equipedTorch.hasLights++;
                 playerAttack.hands[handIndex].damageAmount = weapon.damage;
                 playerAttack.hands[handIndex].cooldownDuration = weapon.attackSpeed;
                 Debug.Log($"Equipped Weapon: {weapon.itemName}, Hand: {(handIndex == 0 ? "Left Hand" : "Right Hand")}, Damage: {weapon.damage}, Attack Speed: {weapon.attackSpeed}");
             }
+            UpdateHandButtonImage(weapon.image);
         }
         else if (item is Torch)
         {
@@ -114,6 +109,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
                 playerAttack.hands[handIndex].cooldownDuration = torch.attackSpeed;
                 Debug.Log($"Equipped Torch: {torch.itemName}, Hand: {(handIndex == 0 ? "Left Hand" : "Right Hand")}, Damage: {torch.damage}, Attack Speed: {torch.attackSpeed}");
             }
+            UpdateHandButtonImage(torch.image);
         }
         else if (item is Helmet)
         {
@@ -178,6 +174,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
                 playerAttack.hands[handIndex].cooldownDuration = 4f; // Reset to default
                 Debug.Log($"Unequipped Weapon: {weapon.itemName}, Hand: {(handIndex == 0 ? "Left Hand" : "Right Hand")}");
             }
+            UpdateHandButtonImage(defaultHandImage);
         }
         else if (item is Torch)
         {
@@ -190,6 +187,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
                 playerAttack.hands[handIndex].cooldownDuration = 4f;
                 Debug.Log($"Unequipped Torch: {torch.itemName}, Hand: {(handIndex == 0 ? "Left Hand" : "Right Hand")}");
             }
+            UpdateHandButtonImage(defaultHandImage);
         }
         else if (item is Helmet)
         {
@@ -238,6 +236,14 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
 
                 Debug.Log($"Unequipped Pants: {pants.itemName}, Character: {healthBar.name}, Armor: {pants.armorValue}, Dodge Chance: {pants.dodgeChance}");
             }
+        }
+    }
+
+    public void UpdateHandButtonImage(Sprite handButtonSprite)
+    {
+        if (handButtonImage != null)
+        {
+            handButtonImage.sprite = handButtonSprite;
         }
     }
 

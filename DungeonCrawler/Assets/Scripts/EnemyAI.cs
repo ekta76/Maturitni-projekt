@@ -24,6 +24,7 @@ public class EnemyAI : MonoBehaviour
     public bool rotationAfterMovementAttack = false;
     public Grid gridManager;
     private bool canChasePlayer = false; // New flag for checking if enemy is next to player
+    public float movingAnimationLengh = 1f;
 
     private Pathfinding pathfinding;
     private Vector3[] currentPath;
@@ -99,6 +100,7 @@ public class EnemyAI : MonoBehaviour
         CheckIfPlayerIsAdjacent();
     }
 
+
     public void OnPlayerEnteredAttackRange()
     {
         isPlayerInAttackArea = true;
@@ -107,20 +109,19 @@ public class EnemyAI : MonoBehaviour
         Debug.Log("Player entered attack range. Start attacking!");
     }
 
-    // Called when player exits the attack range
     public void OnPlayerExitedAttackRange()
     {
         Debug.Log("Player left attack range. Stop attacking.");
         StartCoroutine(WaitAndStartMoving());
     }
 
-    // Coroutine to handle waiting before moving
     private IEnumerator WaitAndStartMoving()
     {
-        // Wait for 1 second
         yield return new WaitForSeconds(moveAfterAttacking);
+        animator.SetBool("MovingAnimation", true);
         MoveForward();
         yield return new WaitForSeconds(rotateAfterMovementAttack);
+        animator.SetBool("MovingAnimation", false);
         gridManager.UpdateGridFromAnimation();
         rotationAfterMovementAttack = false;
         isPlayerInAttackArea = false;
@@ -190,6 +191,7 @@ public class EnemyAI : MonoBehaviour
             // Reset cooldown and stop movement
             currentCooldown = moveInterval;
             isMoving = false;
+            animator.SetBool("MovingAnimation", false);
             yield break; // Do not proceed to move
         }
 
@@ -203,6 +205,15 @@ public class EnemyAI : MonoBehaviour
         yield return new WaitForSeconds(currentCooldown);
 
         isMoving = false;
+
+        StartCoroutine(movingAnimation(movingAnimationLengh));
+    }
+
+    private IEnumerator movingAnimation(float time)
+    {
+        animator.SetBool("MovingAnimation", true);
+        yield return new WaitForSeconds(time);
+        animator.SetBool("MovingAnimation", false);
     }
 
     private Vector3 GetAdjustedPositionNextToPlayer()

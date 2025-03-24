@@ -11,6 +11,11 @@ public class EquipedTorch : MonoBehaviour
 
     void Update()
     {
+        if (hasLights < 0)
+        {
+            hasLights = 0;
+        }
+
         if (hasLights > 0)
         {
             torchLights.SetActive(true);

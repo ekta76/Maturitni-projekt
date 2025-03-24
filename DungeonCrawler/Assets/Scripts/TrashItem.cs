@@ -15,6 +15,8 @@ public class TrashItem : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
         if (draggedItem != null)
         {
             draggedItem.DeleteItem();
+            isDragging = false;
+            trashBin.SetBool("Hover", false);
         }
     }
 

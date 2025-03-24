@@ -18,7 +18,6 @@ public class EnemyAttack : MonoBehaviour
         {
             isPlayerInRange = true;
 
-            // Start the attack sequence if not already attacking
             if (attackCoroutine == null)
             {
                 attackCoroutine = StartCoroutine(AttackSequence(other));
@@ -33,7 +32,6 @@ public class EnemyAttack : MonoBehaviour
         {
             isPlayerInRange = false;
 
-            // Stop the attack sequence
             if (attackCoroutine != null)
             {
                 StopCoroutine(attackCoroutine);
