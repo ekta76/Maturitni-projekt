@@ -132,7 +132,6 @@ GameObject:
   - component: {fileID: 4259468686343868983}
   - component: {fileID: 8552981281164907201}
   - component: {fileID: 914460262411824212}
-  - component: {fileID: 914460262411824213}
   m_Layer: 8
   m_Name: Slime
   m_TagString: Enemy
@@ -182,8 +181,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  pathRefind: 0.05
-  moveInterval: 1
   rotateToPlayerWhenClose: 1
   checkDistance: 1
   unwalkableMasks:
@@ -192,12 +189,6 @@ MonoBehaviour:
   enemySprite: {fileID: 914460261051572549}
   hitbox: {fileID: 2401833687840979915}
   enemyFollowSpeed: 2
-  attackArea: {fileID: 1157613155056813083}
-  moveAfterAttacking: 1
-  rotateAfterMovementAttack: 1
-  isPlayerInAttackArea: 0
-  rotationAfterMovementAttack: 0
-  gridManager: {fileID: 0}
 --- !u!114 &914460262411824212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,18 +203,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyObject: {fileID: 4598324708481333736}
   maxHealth: 100
---- !u!114 &914460262411824213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 914460262411824211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 383649f29e733d3418794407b3027318, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1157613155056813083
 GameObject:
   m_ObjectHideFlags: 0

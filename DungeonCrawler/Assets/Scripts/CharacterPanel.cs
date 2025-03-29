@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class CharacterPanel : MonoBehaviour
 {
     public static int inventoryOpen = 0;
 
@@ -70,15 +70,15 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void ToggleInventory(int inventoryId)
+    public void ToggleInventory(int inventoryID)
     {
-        if (inventoryOpen == inventoryId)
+        if (inventoryOpen == inventoryID)
         {
             inventoryOpen = 0;
         }
         else
         {
-            inventoryOpen = inventoryId;
+            inventoryOpen = inventoryID;
         }
     }
 }

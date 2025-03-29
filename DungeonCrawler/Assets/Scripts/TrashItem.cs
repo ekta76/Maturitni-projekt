@@ -12,21 +12,15 @@ public class TrashItem : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
     {
         InventoryItem draggedItem = eventData.pointerDrag.GetComponent<InventoryItem>();
 
-        if (draggedItem != null)
-        {
-            draggedItem.DeleteItem();
-            isDragging = false;
-            trashBin.SetBool("Hover", false);
-        }
+        draggedItem.DeleteItem();
+        isDragging = false;
+        trashBin.SetBool("Hover", false);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (eventData.pointerDrag != null)
-        {
-            isDragging = true;
-            trashBin.SetBool("Hover", true);
-        }
+        isDragging = true;
+        trashBin.SetBool("Hover", true);
     }
 
     public void OnPointerExit(PointerEventData eventData)

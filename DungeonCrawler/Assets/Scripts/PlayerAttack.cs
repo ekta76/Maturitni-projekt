@@ -62,10 +62,9 @@ public class PlayerAttack : MonoBehaviour
             }
         }
 
-        // Check if PlayerHealth is assigned
         if (playerHealth == null)
         {
-            Debug.LogError("PlayerHealth reference is not assigned. Please assign it in the inspector.");
+            Debug.LogError("PlayerHealth reference is not assigned!");
         }
     }
 
@@ -108,16 +107,8 @@ public class PlayerAttack : MonoBehaviour
         Hand hand = hands[handIndex];
         int pairIndex = handIndex / 2; // Determine the pair index (0 for hand 0-1, 1 for hand 2-3, etc.)
 
-        // Play attack animation if Animator is assigned
-        if (attackAnimation != null)
-        {
-            audioManager.PlaySFX(audioManager.slash);
-            attackAnimation.SetTrigger("Attack");
-        }
-        else
-        {
-            Debug.LogError("Attack animation is not assigned in the inspector.");
-        }
+         audioManager.PlaySFX(audioManager.slash);
+         attackAnimation.SetTrigger("Attack");
 
         // Check if any enemies are in range
         Collider[] hitColliders = Physics.OverlapBox(

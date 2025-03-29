@@ -13,9 +13,10 @@ public class Movement : MonoBehaviour
     private bool isMoving = false;
     public Camera playerCamera;
     public float cameraFollowSpeed = 4f; // Speed at which the camera follows the player
-    private Vector3 cameraOffset = new Vector3(0, -0.2f, -0.25f);
+    public Vector3 cameraOffset = new Vector3(0, -0.2f, -0.25f);
     private Vector3 lastSafePosition;
     public GameObject eventSystem;
+    public bool teleported = false;
 
     public string[] clickableTags = { "FrontChain", "BackChain", "Button", "Lever" };
     private List<Collider> clickableColliders = new List<Collider>();
@@ -107,7 +108,7 @@ public class Movement : MonoBehaviour
 
         if (direction != Vector3.zero && CanMove(direction))
         {
-            lastSafePosition = transform.position; // Store last safe position
+            lastSafePosition = transform.position;
             transform.position += direction; // Instant movement
             StartCoroutine(MovementCooldown());
         }
@@ -126,11 +127,11 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            StartCoroutine(SmoothRotate(-90)); // Rotate left
+            StartCoroutine(SmoothRotate(-90));
         }
         else if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.RightArrow))
         {
-            StartCoroutine(SmoothRotate(90)); // Rotate right
+            StartCoroutine(SmoothRotate(90));
         }
     }
 
@@ -172,11 +173,16 @@ public class Movement : MonoBehaviour
 
     private void UpdateCameraPosition()
     {
-        if (playerCamera != null)
+        Vector3 desiredPosition = transform.position + transform.rotation * cameraOffset;
+        if (!teleported)
         {
-            Vector3 desiredPosition = transform.position + transform.rotation * cameraOffset;
             playerCamera.transform.position = Vector3.MoveTowards(playerCamera.transform.position, desiredPosition, Time.deltaTime * cameraFollowSpeed);
             playerCamera.transform.rotation = Quaternion.Lerp(playerCamera.transform.rotation, transform.rotation, Time.deltaTime * cameraRotationSpeed);
+        }
+        else
+        {
+            playerCamera.transform.position = desiredPosition;
+            playerCamera.transform.rotation = transform.rotation;
         }
     }
 
@@ -203,15 +209,35 @@ public class Movement : MonoBehaviour
         {
             if (collider.CompareTag("Enemy"))
             {
-                transform.position = lastSafePosition; // Reset position if stuck inside an enemy
+                transform.position = lastSafePosition;
                 break;
             }
 
             if (collider.CompareTag("Wall"))
             {
-                transform.position = lastSafePosition; // Reset position if stuck inside a wall
+                transform.position = lastSafePosition;
                 break;
             }
         }
     }
+
+    public void Teleport(Vector3 newPosition)
+    {
+        canMove = false;
+        isMoving = true;
+        teleported = true;
+        transform.position = newPosition;
+        lastSafePosition = newPosition;
+        UpdateCameraPosition();
+        StartCoroutine(TeleportCooldown());
+    }
+
+    private IEnumerator TeleportCooldown()
+    {
+        yield return new WaitForSeconds(0.1f);
+        teleported = false;
+        canMove = true;
+        isMoving = false;
+    }
+
 }

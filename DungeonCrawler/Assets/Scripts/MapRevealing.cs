@@ -7,10 +7,21 @@ public class MapRevealing : MonoBehaviour
 {
     public Transform player;
     public MeshRenderer mapRender;
-    public float mapRevealDistance = 0f;
+    public float mapRevealDistance = 1.1f;
 
     private void Start()
     {
+        GameObject playerObject = GameObject.FindWithTag("PlayerReveal");
+        if (playerObject != null)
+        {
+            player = playerObject.transform;
+        }
+        else
+        {
+            Debug.LogWarning("Player object not found!");
+        }
+
+
         mapRender = GetComponent<MeshRenderer>();
     }
 

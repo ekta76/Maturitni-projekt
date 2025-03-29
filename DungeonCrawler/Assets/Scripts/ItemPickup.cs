@@ -13,11 +13,6 @@ public class ItemPickup : MonoBehaviour
     {
         inventoryManager = FindObjectOfType<InventoryManager>();
 
-        if (inventoryManager == null)
-        {
-            Debug.LogError("InventoryManager not found in the scene!");
-        }
-
         itemLayer = LayerMask.GetMask("Item");
     }
 
@@ -39,7 +34,6 @@ public class ItemPickup : MonoBehaviour
                 bool result = inventoryManager.AddItem(itemsToPickup);
                 if (result == true)
                 {
-
                     Destroy(objectToDestroy);
                     Debug.Log("Item added");
                 }

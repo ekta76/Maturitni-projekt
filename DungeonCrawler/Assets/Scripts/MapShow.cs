@@ -30,7 +30,19 @@ public class MapShow : MonoBehaviour
             movement.enabled = isPlayerCamera;
             uiElements.SetActive(isPlayerCamera);
 
-            Time.timeScale = isPlayerCamera ? 1f : 0f;
+            if (isPlayerCamera)
+            {
+                Time.timeScale = 1f;
+            } 
+            else
+            {
+                Time.timeScale = 0f;
+            }
+        }
+
+        if (!isPlayerCamera)
+        {
+            Cursor.visible = false;
         }
     }
 }

@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    [Header("---------- Audio Source ----------")]
     [SerializeField] AudioSource sFXSource;
     [SerializeField] AudioSource musicSource;
 
-    [Header("---------- Audio Clip ----------")]
     public AudioClip music;
     public AudioClip footstep;
     public AudioClip slash;

@@ -4,47 +4,37 @@ using UnityEngine;
 
 public class GateAnimationLever : MonoBehaviour
 {
-    public Animator gateAnimator;  // Reference to the Wall's Animator
-    public Animator leverAnimator;  // Reference to the Button's Animator
-    public Movement playerMovement; // Reference to the Player's Movement script
-    public BoxCollider gateCollider; // Reference to the Wall's BoxCollider
-    public LayerMask chainLayer; // Layer mask for button detection
-    private Grid gridManager;
+    public Animator gateAnimator;
+    public Animator leverAnimator;
+    public Movement playerMovement;
+    public BoxCollider gateCollider;
+    public LayerMask chainLayer;
 
-    private float progress = 0f; // Tracks animation progress (0-1)
-    private float currentWallSpeed = 0f; // Current animation speed (0, 1, or -1)
-    private float lastWallSpeed = 1f; // Tracks last movement direction
+    private float progress = 0f;
+    private float currentWallSpeed = 0f;
+    private float lastWallSpeed = 1f;
     private bool isFirstClick = true;
     private bool opening = false;
 
-    private void Start()
-    {
-        gridManager = FindObjectOfType<Grid>();
-    }
-
     private void Update()
     {
-        // Check for button click
         if (Input.GetMouseButtonDown(0))
         {
             DetectButtonClick();
         }
 
-        // Update animation progress and handle boundaries
         if (gateAnimator != null)
         {
             AnimatorStateInfo stateInfo = gateAnimator.GetCurrentAnimatorStateInfo(0);
             progress = Mathf.Clamp01(stateInfo.normalizedTime);
 
-            // Stop animation at boundaries
             if ((progress >= 1f && currentWallSpeed > 0) || (progress <= 0f && currentWallSpeed < 0))
             {
                 currentWallSpeed = 0f;
                 gateAnimator.SetFloat("Speed", currentWallSpeed);
             }
 
-            // Update collider state
-            gateCollider.enabled = progress < 0.99f; // Adjust threshold as needed
+            gateCollider.enabled = progress < 0.99f;
         }
     }
 
@@ -52,7 +42,8 @@ public class GateAnimationLever : MonoBehaviour
     {
         AnimatorStateInfo stateInfo = leverAnimator.GetCurrentAnimatorStateInfo(0);
 
-        if (stateInfo.IsName("LeverClosed") || stateInfo.IsName("WoodenLeverOpeningIdle")) {
+        if (stateInfo.IsName("LeverClosed") || stateInfo.IsName("WoodenLeverOpeningIdle")) 
+        {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, 1f, chainLayer))
         {
@@ -86,7 +77,6 @@ public class GateAnimationLever : MonoBehaviour
 
     public void ToggleWall()
     {
-        // Reverse direction or start movement
         if (currentWallSpeed != 0f)
         {
             currentWallSpeed *= -1;
@@ -99,7 +89,6 @@ public class GateAnimationLever : MonoBehaviour
         lastWallSpeed = currentWallSpeed;
         gateAnimator.SetFloat("Speed", currentWallSpeed);
 
-        // Ensure the animation starts from the correct normalized time
         float normalizedTime = GetNormalizedTime();
         gateAnimator.Play("GateAnimation", 0, normalizedTime);
     }
@@ -125,14 +114,6 @@ public class GateAnimationLever : MonoBehaviour
         if (playerMovement != null)
         {
             playerMovement.enabled = true;
-        }
-    }
-
-    public void AnimationUpdateGrid() // Called via animation event
-    {
-        if (gridManager != null)
-        {
-            gridManager.UpdateGridFromAnimation();
         }
     }
 }

@@ -12,7 +12,8 @@ public class EnemyHealth : MonoBehaviour
 
     void Start()
     {
-        currentHealth = maxHealth; // Initialize health
+        currentHealth = maxHealth;
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     private void Awake()
@@ -20,22 +21,18 @@ public class EnemyHealth : MonoBehaviour
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
+
     public void TakeDamage(int amount)
     {
-        // Decrease health by the damage amount
         currentHealth -= amount;
         audioManager.PlaySFX(audioManager.slimeHit);
         Vector3 randomness = new Vector3(Random.Range(0.1f, -0.1f), Random.Range(0.1f, -0.1f), 0);
         DamageNumberGenerator3D.current.CreatePopUp(transform.position + randomness, amount.ToString());
 
-        // Check if health is less than or equal to 0, then destroy the enemy
         if (currentHealth <= 0)
         {
-            Debug.Log($"Enemy {gameObject.name} has died!");
-            Destroy(enemyObject);  // Destroy the enemy game object
+            Debug.Log($"Enemy has died!");
+            Destroy(enemyObject);
         }
-
-        // You could also add a debug log here to see how much damage was taken
-        Debug.Log($"{gameObject.name} took {amount} damage, remaining health: {currentHealth}");
     }
 }

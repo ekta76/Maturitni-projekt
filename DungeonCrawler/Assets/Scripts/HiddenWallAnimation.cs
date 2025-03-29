@@ -3,46 +3,36 @@ using UnityEngine;
 
 public class HiddenWallAnimation : MonoBehaviour
 {
-    public Animator wallAnimator;  // Reference to the Wall's Animator
-    public Animator buttonAnimator;  // Reference to the Button's Animator
-    public Movement playerMovement; // Reference to the Player's Movement script
-    public BoxCollider wallCollider; // Reference to the Wall's BoxCollider
-    public LayerMask chainLayer; // Layer mask for button detection
-    private Grid gridManager;
+    public Animator wallAnimator;
+    public Animator buttonAnimator;
+    public Movement playerMovement;
+    public BoxCollider wallCollider;
+    public LayerMask chainLayer;
 
-    private float progress = 0f; // Tracks animation progress (0-1)
-    private float currentWallSpeed = 0f; // Current animation speed (0, 1, or -1)
-    private float lastWallSpeed = 1f; // Tracks last movement direction
+    private float progress = 0f;
+    private float currentWallSpeed = 0f;
+    private float lastWallSpeed = 1f;
     private bool isFirstClick = true;
-
-    private void Start()
-    {
-        gridManager = FindObjectOfType<Grid>();
-    }
 
     private void Update()
     {
-        // Check for button click
         if (Input.GetMouseButtonDown(0))
         {
             DetectButtonClick();
         }
 
-        // Update animation progress and handle boundaries
         if (wallAnimator != null)
         {
             AnimatorStateInfo stateInfo = wallAnimator.GetCurrentAnimatorStateInfo(0);
             progress = Mathf.Clamp01(stateInfo.normalizedTime);
 
-            // Stop animation at boundaries
             if ((progress >= 1f && currentWallSpeed > 0) || (progress <= 0f && currentWallSpeed < 0))
             {
                 currentWallSpeed = 0f;
                 wallAnimator.SetFloat("Speed", currentWallSpeed);
             }
 
-            // Update collider state
-            wallCollider.enabled = progress < 0.99f; // Adjust threshold as needed
+            wallCollider.enabled = progress < 0.99f;
         }
     }
 
@@ -78,7 +68,6 @@ public class HiddenWallAnimation : MonoBehaviour
 
     public void ToggleWall()
     {
-        // Reverse direction or start movement
         if (currentWallSpeed != 0f)
         {
             currentWallSpeed *= -1;
@@ -91,7 +80,6 @@ public class HiddenWallAnimation : MonoBehaviour
         lastWallSpeed = currentWallSpeed;
         wallAnimator.SetFloat("Speed", currentWallSpeed);
 
-        // Ensure the animation starts from the correct normalized time
         float normalizedTime = GetNormalizedTime();
         wallAnimator.Play("WallAnimation", 0, normalizedTime);
     }
@@ -117,14 +105,6 @@ public class HiddenWallAnimation : MonoBehaviour
         if (playerMovement != null)
         {
             playerMovement.enabled = true;
-        }
-    }
-
-    public void AnimationUpdateGrid() // Called via animation event
-    {
-        if (gridManager != null)
-        {
-            gridManager.UpdateGridFromAnimation();
         }
     }
 }

@@ -21,18 +21,13 @@ public class PauseMenu : MonoBehaviour
     private void Start()
     {
         inventoryShow = FindObjectOfType<InventoryShow>();
-
-        if (inventoryShow == null)
-        {
-            Debug.LogWarning("InventoryShow script not added!");
-        }
     }
 
     public void Update()
     {
         if (!couriteHasRun)
         {
-            StartCoroutine(EscKeyStartStop(2.5f));
+            StartCoroutine(EscKeyStartStop(2f));
             couriteHasRun = true;
         }
 
@@ -63,11 +58,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
-
-        if (inventoryShow != null)
-        {
-            inventoryShow.enabled = true;
-        }
+        inventoryShow.enabled = true;
     }
 
     void Pause()
@@ -75,11 +66,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
-
-        if (inventoryShow != null)
-        {
-            inventoryShow.enabled = false;
-        }
+        inventoryShow.enabled = false;
     }
 
     public void LoadMenu()

@@ -14,7 +14,6 @@ public class Options : MonoBehaviour
     public Toggle fullscreenToggle;
 
     private List<Resolution> uniqueResolutions = new List<Resolution>();
-
     void Start()
     {
         Debug.Log("Options menu initialized");
@@ -47,7 +46,7 @@ public class Options : MonoBehaviour
 
         resolutionDropdown.AddOptions(options);
 
-        // Load saved resolution
+        //Resolution
         if (PlayerPrefs.HasKey("ResolutionIndex"))
         {
             currentResolutionIndex = PlayerPrefs.GetInt("ResolutionIndex");
@@ -56,7 +55,7 @@ public class Options : MonoBehaviour
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
 
-        // Load saved volume settings
+        //Volume
         if (PlayerPrefs.HasKey("MasterVolume"))
         {
             float volume = PlayerPrefs.GetFloat("MasterVolume");
@@ -76,7 +75,7 @@ public class Options : MonoBehaviour
             musicVolumeSlider.value = volume;
         }
 
-        // Load saved fullscreen mode
+        //Fullscreen
         if (PlayerPrefs.HasKey("Fullscreen"))
         {
             bool isFullscreen = PlayerPrefs.GetInt("Fullscreen") == 1;
@@ -92,7 +91,7 @@ public class Options : MonoBehaviour
         {
             Resolution resolution = uniqueResolutions[resolutionIndex];
             Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreenMode);
-            PlayerPrefs.SetInt("ResolutionIndex", resolutionIndex); // Save resolution index
+            PlayerPrefs.SetInt("ResolutionIndex", resolutionIndex);
             PlayerPrefs.Save();
         }
     }
@@ -100,28 +99,28 @@ public class Options : MonoBehaviour
     public void setVolumeMaster(float volume)
     {
         audioMixer.SetFloat("masterVolume", volume);
-        PlayerPrefs.SetFloat("MasterVolume", volume); // Save volume
+        PlayerPrefs.SetFloat("MasterVolume", volume);
         PlayerPrefs.Save();
     }
 
     public void setVolumeMusic(float volume)
     {
         audioMixer.SetFloat("musicVolume", volume);
-        PlayerPrefs.SetFloat("MusicVolume", volume); // Save volume
+        PlayerPrefs.SetFloat("MusicVolume", volume);
         PlayerPrefs.Save();
     }
 
     public void setVolumeSoundFX(float volume)
     {
         audioMixer.SetFloat("sfxVolume", volume);
-        PlayerPrefs.SetFloat("SFXVolume", volume); // Save volume
+        PlayerPrefs.SetFloat("SFXVolume", volume);
         PlayerPrefs.Save();
     }
 
     public void setFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
-        PlayerPrefs.SetInt("Fullscreen", isFullscreen ? 1 : 0); // Save fullscreen mode (1 = true, 0 = false)
+        PlayerPrefs.SetInt("Fullscreen", isFullscreen ? 1 : 0);
         PlayerPrefs.Save();
     }
 }
