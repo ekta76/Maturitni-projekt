@@ -18,6 +18,7 @@ TagManager:
   - Item
   - TorchLights
   - MapCamera
+  - FireballAnimation
   layers:
   - Default
   - TransparentFX

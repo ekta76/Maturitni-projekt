@@ -15,8 +15,8 @@ public class RealoadObject : MonoBehaviour
     {
         foreach (GameObject obj in objectsToToggle)
         {
-                obj.SetActive(false);
-                obj.SetActive(true);
+            obj.SetActive(true);
+            obj.SetActive(false);
         }
     }
 }

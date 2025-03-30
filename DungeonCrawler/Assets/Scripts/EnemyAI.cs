@@ -10,9 +10,11 @@ public class EnemyAI : MonoBehaviour
     public float moveAfterAttacking = 1f;
     public float rotateAfterMovementAttack = 1f;
     public float checkDistance = 1f;
-    public float enemyFollowSpeed = 2f;
+    public float enemySpriteFollowSpeed = 2f;
     private Animator animator;
     private Camera mainCamera;
+    public float groundPositionForSprite = 0f;
+    private Coroutine movementCoroutine;
 
     private bool rotationAfterMovementAttack = false;
 
@@ -55,13 +57,31 @@ public class EnemyAI : MonoBehaviour
     public void OnPlayerEnteredAttackRange()
     {
         rotationAfterMovementAttack = true;
+        if (movementCoroutine != null)
+        {
+            StopCoroutine(movementCoroutine);
+            movementCoroutine = null;
+        }
+
+        if (animator != null)
+        {
+            animator.SetBool("MovingAnimation", false);
+            animator.SetBool("Attack", false);
+        }
+
         Debug.Log("Player entered attack range. Start attacking!");
     }
 
     public void OnPlayerExitedAttackRange()
     {
         Debug.Log("Player left attack range. Stop attacking.");
-        StartCoroutine(WaitAndStartMoving());
+
+        if (animator != null)
+        {
+            animator.SetBool("Attack", false);
+        }
+
+        movementCoroutine = StartCoroutine(WaitAndStartMoving());
     }
 
     private IEnumerator WaitAndStartMoving()
@@ -93,8 +113,8 @@ public class EnemyAI : MonoBehaviour
         if (enemySprite != null)
         {
             Vector3 desiredPosition = transform.position;
-            desiredPosition.y = -0.17f;
-            enemySprite.transform.position = Vector3.MoveTowards(enemySprite.transform.position, desiredPosition, Time.deltaTime * enemyFollowSpeed);
+            desiredPosition.y = groundPositionForSprite;
+            enemySprite.transform.position = Vector3.MoveTowards(enemySprite.transform.position, desiredPosition, Time.deltaTime * enemySpriteFollowSpeed);
         }
     }
 

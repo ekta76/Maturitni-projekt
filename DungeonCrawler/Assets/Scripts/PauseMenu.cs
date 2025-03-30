@@ -15,7 +15,7 @@ public class PauseMenu : MonoBehaviour
 
     private InventoryShow inventoryShow;
 
-    private bool canPressEsc = false;
+    public bool canPressEsc = false;
     private bool couriteHasRun = false;
 
     private void Start()
@@ -76,7 +76,7 @@ public class PauseMenu : MonoBehaviour
         StartCoroutine(playAnimation("MainMenu"));
     }
 
-    IEnumerator playAnimation(string text)
+    public IEnumerator playAnimation(string text)
     {
         transitionAnimator.SetTrigger("nextLevel");
 

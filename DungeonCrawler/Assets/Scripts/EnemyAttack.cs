@@ -11,6 +11,8 @@ public class EnemyAttack : MonoBehaviour
     public Animator enemyAnimator;
     public GameObject enemySprite;
     public EnemyAI enemyAI;
+    public float attackAnimationTime = 0.8f;
+    public float applyDamageAfterAttackTime = 0.2f;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -45,33 +47,31 @@ public class EnemyAttack : MonoBehaviour
     {
         while (isPlayerInRange)
         {
-
-            // Wait for the attack delay
             yield return new WaitForSeconds(attackDelay);
 
-            // Check if the player is still in range
+            
             if (isPlayerInRange)
             {
                 PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
                 if (playerHealth != null)
                 {
                     enemyAnimator.SetTrigger("Attack");
-                    yield return new WaitForSeconds(0.8f);
-                    StartCoroutine(AttackEffect(0.2f, 0.5f)); // Moves 0.5 units forward in 0.2 sec
-                    yield return new WaitForSeconds(0.2f);
-                    playerHealth.TryToTakeDamage(damageAmount); // Call the method to apply damage
+                    yield return new WaitForSeconds(attackAnimationTime);
+                    StartCoroutine(AttackEffect(0.2f, 0.5f));
+                    yield return new WaitForSeconds(applyDamageAfterAttackTime);
+                    playerHealth.TryToTakeDamage(damageAmount);
                     Debug.Log($"AI attacked player {player.name}, dealing {damageAmount} damage!");
                 }
             }
         }
 
-        attackCoroutine = null; // Clear the coroutine reference when done
+        attackCoroutine = null;
     }
 
     private IEnumerator AttackEffect(float duration, float moveDistance)
     {
         Vector3 startPosition = enemySprite.transform.position;
-        Vector3 attackPosition = startPosition + transform.forward * moveDistance; // Move forward
+        Vector3 attackPosition = startPosition + transform.forward * moveDistance;
 
         float elapsedTime = 0f;
         while (elapsedTime < duration)
@@ -90,7 +90,7 @@ public class EnemyAttack : MonoBehaviour
             yield return null;
         }
 
-        enemySprite.transform.position = startPosition; // Ensure it resets correctly
+        enemySprite.transform.position = startPosition;
     }
 
 

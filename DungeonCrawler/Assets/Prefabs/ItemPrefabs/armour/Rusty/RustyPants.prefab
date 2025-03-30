@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 5669415025428529756}
   - component: {fileID: 5669415025428529759}
   m_Layer: 11
-  m_Name: IronSword
-  m_TagString: Untagged
+  m_Name: RustyPants
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0a923111e7b0c7447b0d7b7cd5d796e3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d7dc31fbdcbcce347a029bc5f5a4f5f2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03a30837b2988614bb44a4e84c08b096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemsToPickup: {fileID: 0}
+  itemsToPickup: {fileID: 11400000, guid: 478dcb3f241241640897c0a69de627a9, type: 2}
   objectToDestroy: {fileID: 5669415025428529745}
 --- !u!114 &5669415025428529759
 MonoBehaviour:
