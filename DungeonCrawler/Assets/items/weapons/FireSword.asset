@@ -15,5 +15,5 @@ MonoBehaviour:
   itemName: Fire Sword
   image: {fileID: 21300000, guid: ad64fc6f0ae23974882bde3c18c7024b, type: 3}
   description: 
-  damage: 15
+  damage: 20
   attackSpeed: 3

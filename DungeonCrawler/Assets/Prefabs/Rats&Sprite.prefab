@@ -201,7 +201,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyObject: {fileID: 4598324708481333736}
-  maxHealth: 100
+  maxHealth: 40
+  typeOfEnemy: 2
 --- !u!1 &1157613155056813083
 GameObject:
   m_ObjectHideFlags: 0

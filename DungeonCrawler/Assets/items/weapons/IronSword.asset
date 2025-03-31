@@ -15,5 +15,5 @@ MonoBehaviour:
   itemName: Iron sword
   image: {fileID: 21300000, guid: 0a923111e7b0c7447b0d7b7cd5d796e3, type: 3}
   description: 
-  damage: 8
+  damage: 9
   attackSpeed: 3

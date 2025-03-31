@@ -11,16 +11,21 @@ public class GateAnimationLever : MonoBehaviour
     public LayerMask chainLayer;
 
     private float progress = 0f;
-    private float currentWallSpeed = 0f;
-    private float lastWallSpeed = 1f;
+    private float currentGateSpeed = 0f;
+    private float lastGateSpeed = 1f;
     private bool isFirstClick = true;
     private bool opening = false;
+
+    public AudioSource gateStoppedSource;
+    public AudioSource gateMovingSource;
+    public AudioSource leverSource;
+
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            DetectButtonClick();
+            DetectLeverPull();
         }
 
         if (gateAnimator != null)
@@ -28,17 +33,39 @@ public class GateAnimationLever : MonoBehaviour
             AnimatorStateInfo stateInfo = gateAnimator.GetCurrentAnimatorStateInfo(0);
             progress = Mathf.Clamp01(stateInfo.normalizedTime);
 
-            if ((progress >= 1f && currentWallSpeed > 0) || (progress <= 0f && currentWallSpeed < 0))
+            if ((progress >= 1f && currentGateSpeed > 0) || (progress <= 0f && currentGateSpeed < 0))
             {
-                currentWallSpeed = 0f;
-                gateAnimator.SetFloat("Speed", currentWallSpeed);
+                currentGateSpeed = 0f;
+                gateAnimator.SetFloat("Speed", currentGateSpeed);
+                StartCoroutine(StopGateSoundAfterStop());
+                StartCoroutine(PlayGateSoundEffectAfterStopping());
             }
 
             gateCollider.enabled = progress < 0.99f;
         }
     }
 
-    private void DetectButtonClick()
+    private IEnumerator PlayGateSoundEffectAfterStopping()
+    {
+        yield return new WaitForEndOfFrame();
+
+        if (gateAnimator != null)
+        {
+            gateStoppedSource.Play();
+        }
+    }
+
+    private IEnumerator StopGateSoundAfterStop()
+    {
+        yield return new WaitForEndOfFrame();
+
+        if (gateMovingSource != null && gateMovingSource.isPlaying)
+        {
+            gateMovingSource.Stop();
+        }
+    }
+
+    private void DetectLeverPull()
     {
         AnimatorStateInfo stateInfo = leverAnimator.GetCurrentAnimatorStateInfo(0);
 
@@ -54,14 +81,22 @@ public class GateAnimationLever : MonoBehaviour
                     opening = !opening;
                     ToggleWall();
                     ToggleWall();
-                    PlayButtonAnimation();
+                    PlayLeverAnimation();
+                    if (leverSource != null)
+                     {
+                            leverSource.Play();
+                     }
                     DisableMovementControllerTemporarily(0.2f);
                     isFirstClick = false;
                 }
                 else
                 {
+                   if (leverSource != null)
+                     {
+                            leverSource.Play();
+                     }
                     opening = !opening;
-                    PlayButtonAnimation();
+                    PlayLeverAnimation();
                     ToggleWall();
                     DisableMovementControllerTemporarily(0.2f);
                 }
@@ -70,24 +105,29 @@ public class GateAnimationLever : MonoBehaviour
         }
     }
 
-    private void PlayButtonAnimation()
+    private void PlayLeverAnimation()
     {
         leverAnimator.SetBool("opening", opening);
     }
 
     public void ToggleWall()
     {
-        if (currentWallSpeed != 0f)
+        if (currentGateSpeed != 0f)
         {
-            currentWallSpeed *= -1;
+            currentGateSpeed *= -1;
         }
         else
         {
-            currentWallSpeed = -lastWallSpeed;
+            currentGateSpeed = -lastGateSpeed;
         }
 
-        lastWallSpeed = currentWallSpeed;
-        gateAnimator.SetFloat("Speed", currentWallSpeed);
+        lastGateSpeed = currentGateSpeed;
+        gateAnimator.SetFloat("Speed", currentGateSpeed);
+
+        if (currentGateSpeed != 0f && gateMovingSource != null && !gateMovingSource.isPlaying)
+        {
+            gateMovingSource.Play();
+        }
 
         float normalizedTime = GetNormalizedTime();
         gateAnimator.Play("GateAnimation", 0, normalizedTime);

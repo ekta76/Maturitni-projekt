@@ -16,4 +16,4 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: c48804a022bfdc041b2d46815d7c666a, type: 3}
   description: 
   damage: 5
-  attackSpeed: 1.5
+  attackSpeed: 2

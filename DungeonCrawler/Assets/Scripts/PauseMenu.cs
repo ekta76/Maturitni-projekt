@@ -18,9 +18,13 @@ public class PauseMenu : MonoBehaviour
     public bool canPressEsc = false;
     private bool couriteHasRun = false;
 
+    public Movement movement;
+
+
     private void Start()
     {
         inventoryShow = FindObjectOfType<InventoryShow>();
+        movement = FindObjectOfType<Movement>();
     }
 
     public void Update()
@@ -59,6 +63,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         GameIsPaused = false;
         inventoryShow.enabled = true;
+        movement.enabled = true;
     }
 
     void Pause()
@@ -67,6 +72,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         GameIsPaused = true;
         inventoryShow.enabled = false;
+        movement.enabled = false;
     }
 
     public void LoadMenu()

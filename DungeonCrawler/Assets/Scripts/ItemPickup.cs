@@ -9,9 +9,12 @@ public class ItemPickup : MonoBehaviour
     private LayerMask itemLayer;
     public GameObject objectToDestroy;
 
+    AudioManager audioManager;
+
     private void Awake()
     {
         inventoryManager = FindObjectOfType<InventoryManager>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
 
         itemLayer = LayerMask.GetMask("Item");
     }
@@ -34,6 +37,7 @@ public class ItemPickup : MonoBehaviour
                 bool result = inventoryManager.AddItem(itemsToPickup);
                 if (result == true)
                 {
+                    audioManager.PlaySFX(audioManager.itemPickUp);
                     Destroy(objectToDestroy);
                     Debug.Log("Item added");
                 }

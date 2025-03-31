@@ -14,6 +14,13 @@ public class EnemyAttack : MonoBehaviour
     public float attackAnimationTime = 0.8f;
     public float applyDamageAfterAttackTime = 0.2f;
 
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -59,6 +66,7 @@ public class EnemyAttack : MonoBehaviour
                     yield return new WaitForSeconds(attackAnimationTime);
                     StartCoroutine(AttackEffect(0.2f, 0.5f));
                     yield return new WaitForSeconds(applyDamageAfterAttackTime);
+                    audioManager.PlaySFX(audioManager.gettingHitNormal);
                     playerHealth.TryToTakeDamage(damageAmount);
                     Debug.Log($"AI attacked player {player.name}, dealing {damageAmount} damage!");
                 }

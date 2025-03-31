@@ -88,28 +88,25 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W))
         {
             direction = transform.forward;
-            audioManager.PlaySFX(audioManager.footstep);
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
             direction = -transform.forward;
-            audioManager.PlaySFX(audioManager.footstep);
         }
         else if (Input.GetKeyDown(KeyCode.A))
         {
             direction = -transform.right;
-            audioManager.PlaySFX(audioManager.footstep);
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
             direction = transform.right;
-            audioManager.PlaySFX(audioManager.footstep);
         }
 
         if (direction != Vector3.zero && CanMove(direction))
         {
             lastSafePosition = transform.position;
             transform.position += direction; // Instant movement
+            audioManager.PlaySFX(audioManager.footstep);
             StartCoroutine(MovementCooldown());
         }
     }

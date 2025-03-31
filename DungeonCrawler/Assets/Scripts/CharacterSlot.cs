@@ -23,6 +23,13 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
     public Image handButtonImage;
     public Sprite defaultHandImage;
 
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     // Update method to check if the slot is empty and reset stats if necessary
     void Update()
     {
@@ -45,6 +52,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
         // If the slot is empty, place the item
         if (transform.childCount == 0)
         {
+            audioManager.PlaySFX(audioManager.itemPickUp);
             draggableItem.parentAfterDrag = transform;
             EquipItem(draggableItem.item);
         }

@@ -14,6 +14,9 @@ public class HiddenWallAnimation : MonoBehaviour
     private float lastWallSpeed = 1f;
     private bool isFirstClick = true;
 
+    public AudioSource wallMovingSource;
+    public AudioSource buttonSource;
+
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -30,9 +33,20 @@ public class HiddenWallAnimation : MonoBehaviour
             {
                 currentWallSpeed = 0f;
                 wallAnimator.SetFloat("Speed", currentWallSpeed);
+                StartCoroutine(StopWallSoundAfterStop());
             }
 
             wallCollider.enabled = progress < 0.99f;
+        }
+    }
+
+    private IEnumerator StopWallSoundAfterStop()
+    {
+        yield return new WaitForEndOfFrame();
+
+        if (wallMovingSource != null && wallMovingSource.isPlaying)
+        {
+            wallMovingSource.Stop();
         }
     }
 
@@ -48,11 +62,19 @@ public class HiddenWallAnimation : MonoBehaviour
                     ToggleWall();
                     ToggleWall();
                     PlayButtonAnimation();
+                    if (buttonSource != null)
+                    {
+                        buttonSource.Play();
+                    }
                     DisableMovementControllerTemporarily(0.2f);
                     isFirstClick = false;
                 }
                 else
                 {
+                    if (buttonSource != null)
+                    {
+                        buttonSource.Play();
+                    }
                     PlayButtonAnimation();
                     ToggleWall();
                     DisableMovementControllerTemporarily(0.2f);
@@ -79,6 +101,11 @@ public class HiddenWallAnimation : MonoBehaviour
 
         lastWallSpeed = currentWallSpeed;
         wallAnimator.SetFloat("Speed", currentWallSpeed);
+
+        if (currentWallSpeed != 0f && wallMovingSource != null && !wallMovingSource.isPlaying)
+        {
+            wallMovingSource.Play();
+        }
 
         float normalizedTime = GetNormalizedTime();
         wallAnimator.Play("WallAnimation", 0, normalizedTime);

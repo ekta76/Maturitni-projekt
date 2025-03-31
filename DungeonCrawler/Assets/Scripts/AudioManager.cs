@@ -11,6 +11,14 @@ public class AudioManager : MonoBehaviour
     public AudioClip footstep;
     public AudioClip slash;
     public AudioClip slimeHit;
+    public AudioClip skeletonHit;
+    public AudioClip zombieHit;
+    public AudioClip ratHit;
+    public AudioClip minotaurHit;
+    public AudioClip gettingHitNormal;
+    public AudioClip gettingHitFireball;
+    public AudioClip itemPickUp;
+    public AudioClip healing;
 
     private void Start()
     {

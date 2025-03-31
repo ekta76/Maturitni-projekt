@@ -15,5 +15,5 @@ MonoBehaviour:
   itemName: Rusty dagger
   image: {fileID: 21300000, guid: 8d4d366f8296c794fb99f767e3a873bf, type: 3}
   description: 
-  damage: 3
-  attackSpeed: 1.5
+  damage: 4
+  attackSpeed: 2

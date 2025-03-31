@@ -15,5 +15,5 @@ MonoBehaviour:
   itemName: Rusty sword
   image: {fileID: 21300000, guid: 53aa2678392624648a169158a0c8e26d, type: 3}
   description: 
-  damage: 6
+  damage: 7
   attackSpeed: 3

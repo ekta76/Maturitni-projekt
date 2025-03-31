@@ -16,6 +16,9 @@ public class GateAnimation : MonoBehaviour
     private float lastGateSpeed = 1f; // Tracks last movement direction
     private bool isFirstClick = true;
 
+    public AudioSource gateStoppedSource;
+    public AudioSource gateMovingSource;
+
     private void Update()
     {
         // Check for interaction with the chains
@@ -35,10 +38,32 @@ public class GateAnimation : MonoBehaviour
             {
                 currentGateSpeed = 0f;
                 gateAnimator.SetFloat("Speed", currentGateSpeed);
+                StartCoroutine(StopGateSoundAfterStop());
+                StartCoroutine(PlayGateSoundEffectAfterStopping());
             }
 
             // Update collider state
             gateCollider.enabled = progress < 0.99f; // Adjust threshold as needed
+        }
+    }
+
+    private IEnumerator PlayGateSoundEffectAfterStopping()
+    {
+        yield return new WaitForEndOfFrame();
+        
+        if (gateAnimator != null)
+        {
+            gateStoppedSource.Play();
+        }
+    }
+
+    private IEnumerator StopGateSoundAfterStop()
+    {
+        yield return new WaitForEndOfFrame();
+
+        if (gateMovingSource != null && gateMovingSource.isPlaying)
+        {
+            gateMovingSource.Stop();
         }
     }
 
@@ -103,6 +128,11 @@ public class GateAnimation : MonoBehaviour
 
         lastGateSpeed = currentGateSpeed;
         gateAnimator.SetFloat("Speed", currentGateSpeed);
+
+        if (currentGateSpeed != 0f && gateMovingSource != null && !gateMovingSource.isPlaying)
+        {
+            gateMovingSource.Play();
+        }
 
         // Ensure the animation starts from the correct normalized time
         float normalizedTime = GetNormalizedTime();

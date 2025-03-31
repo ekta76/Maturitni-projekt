@@ -10,6 +10,13 @@ public class HealCharacter : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
     public int characterIndex; // The index of the character to heal (e.g., 0 for the first character)
     public PlayerHealth playerHealth; // Reference to the PlayerHealth script
 
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     public void OnDrop(PointerEventData eventData)
     {
         InventoryItem draggedItem = eventData.pointerDrag.GetComponent<InventoryItem>();
@@ -18,6 +25,7 @@ public class HealCharacter : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         {
             // The item is a Potion
             Potion potion = draggedItem.item as Potion;
+            audioManager.PlaySFX(audioManager.healing);
 
             if (potion != null)
             {

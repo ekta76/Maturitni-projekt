@@ -9,6 +9,7 @@ public class EnemyHealth : MonoBehaviour
     private int currentHealth;
 
     AudioManager audioManager;
+    public int typeOfEnemy = 0;
 
     void Start()
     {
@@ -25,7 +26,27 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
-        audioManager.PlaySFX(audioManager.slimeHit);
+
+        switch(typeOfEnemy)
+        {
+            case 1:
+                audioManager.PlaySFX(audioManager.slimeHit);
+                break;
+            case 2:
+                audioManager.PlaySFX(audioManager.ratHit);
+                break;
+            case 3:
+                audioManager.PlaySFX(audioManager.skeletonHit);
+                break;
+            case 4:
+                audioManager.PlaySFX(audioManager.zombieHit);
+                break;
+            default:
+                audioManager.PlaySFX(audioManager.minotaurHit);
+                break;
+        }
+
+
         Vector3 randomness = new Vector3(Random.Range(0.1f, -0.1f), Random.Range(0.1f, -0.1f), 0);
         DamageNumberGenerator3D.current.CreatePopUp(transform.position + randomness, amount.ToString());
 

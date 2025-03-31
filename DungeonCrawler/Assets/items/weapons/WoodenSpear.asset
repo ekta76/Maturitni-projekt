@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Wooden spear
   image: {fileID: 21300000, guid: c02728d812728324890f9770cef97666, type: 3}
-  damage: 3
-  attackSpeed: 2
-  hasRange: 0
+  description: 
+  damage: 4
+  attackSpeed: 3

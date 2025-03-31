@@ -9,12 +9,22 @@ public class IronGateBossRoom : MonoBehaviour
     public BoxCollider gateCollider;
     public float timeToWait = 4f;
 
+    public AudioSource gateMovingSource;
+    public AudioSource gateStopped;
+    public bool bossKilled = false;
+
     private void Update()
     {
         if (Boss == null)
         {
             ironGateBossAnimator.SetTrigger("Killed");
             StartCoroutine(enableCollider(timeToWait));
+
+            if (!bossKilled)
+            {
+                StartCoroutine(bossKilledSound());
+            }
+
             enabled = false;
         }
     }
@@ -23,6 +33,12 @@ public class IronGateBossRoom : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         gateCollider.enabled = false;
+    }
 
+    IEnumerator bossKilledSound()
+    {
+        gateMovingSource.Play();
+        yield return new WaitForSeconds(4f);
+        gateStopped.Play();
     }
 }

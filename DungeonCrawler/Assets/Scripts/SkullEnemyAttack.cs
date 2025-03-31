@@ -15,9 +15,16 @@ public class SkullEnemyAttack : MonoBehaviour
     public float applyDamageAfterAttackTime = 0.2f;
     public Animator fireballAnimator;
 
+    AudioManager audioManager;
+
     private void Start()
     {
         fireballAnimator = GameObject.FindGameObjectWithTag("FireballAnimation").GetComponent<Animator>();
+    }
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -64,6 +71,7 @@ public class SkullEnemyAttack : MonoBehaviour
                     enemyAnimator.SetTrigger("Attack");
                     yield return new WaitForSeconds(attackAnimationTime);
                     yield return new WaitForSeconds(applyDamageAfterAttackTime);
+                    audioManager.PlaySFX(audioManager.gettingHitFireball);
                     fireballAnimator.SetTrigger("Fireball");
                     playerHealth.TryToTakeDamage(damageAmount);
                     Debug.Log($"AI attacked player {player.name}, dealing {damageAmount} damage!");
