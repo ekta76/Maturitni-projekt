@@ -1,1 +1,2 @@
-# Maturitni-projekt
+# Maturitní práce
+Tohle je repozitář na maturitní práci.
