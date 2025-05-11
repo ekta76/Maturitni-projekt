@@ -178,7 +178,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
             // Reset weapon stats to 0 or default values
             if (playerAttack != null)
             {
-                playerAttack.hands[handIndex].damageAmount = 2; // Reset to default
+                playerAttack.hands[handIndex].damageAmount = 4; // Reset to default
                 playerAttack.hands[handIndex].cooldownDuration = 4f; // Reset to default
                 Debug.Log($"Unequipped Weapon: {weapon.itemName}, Hand: {(handIndex == 0 ? "Left Hand" : "Right Hand")}");
             }
@@ -191,7 +191,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler
             if (playerAttack != null)
             {
                 equipedTorch.hasLights--;
-                playerAttack.hands[handIndex].damageAmount = 2;
+                playerAttack.hands[handIndex].damageAmount = 4;
                 playerAttack.hands[handIndex].cooldownDuration = 4f;
                 Debug.Log($"Unequipped Torch: {torch.itemName}, Hand: {(handIndex == 0 ? "Left Hand" : "Right Hand")}");
             }

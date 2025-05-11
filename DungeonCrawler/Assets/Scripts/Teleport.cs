@@ -35,12 +35,18 @@ public class Teleport : MonoBehaviour
 
             foreach (GameObject obj in objectsToDeactivate)
             {
-                obj.SetActive(false);
+                if (obj != null)
+                {
+                    obj.SetActive(false);
+                }
             }
 
             foreach (GameObject obj in objectsToActivate)
             {
-                obj.SetActive(true);
+                if (obj != null)
+                {
+                    obj.SetActive(true);
+                }
             }
         }
     }

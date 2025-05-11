@@ -15,30 +15,20 @@ public class IronGateBossRoom : MonoBehaviour
 
     private void Update()
     {
-        if (Boss == null)
+        if (Boss == null && !bossKilled)
         {
             ironGateBossAnimator.SetTrigger("Killed");
-            StartCoroutine(enableCollider(timeToWait));
-
-            if (!bossKilled)
-            {
-                StartCoroutine(bossKilledSound());
-            }
-
-            enabled = false;
+            bossKilled = true;
+            StartCoroutine(bossKilledEffect());
         }
     }
 
-    IEnumerator enableCollider(float time)
-    {
-        yield return new WaitForSeconds(time);
-        gateCollider.enabled = false;
-    }
-
-    IEnumerator bossKilledSound()
+    IEnumerator bossKilledEffect()
     {
         gateMovingSource.Play();
         yield return new WaitForSeconds(4f);
+        gateCollider.enabled = false;
         gateStopped.Play();
+        enabled = false;
     }
 }
